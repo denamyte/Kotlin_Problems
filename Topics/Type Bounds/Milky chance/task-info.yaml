@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "fun &lt;T extends Animal&gt; feedWithAnimal(animal: T) { }"
+  - text: "fun &lt;T : Animal&gt;  feedWithMilk(animal : T) { }"
+  - text: "fun &lt;T:Animal&gt; feedWithMilk(animal: Any) { }"
+  - text: " fun feedWithMilk(animal: Cat) { }"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16937#comment
+status: Solved
+record: -1
+local_check: false

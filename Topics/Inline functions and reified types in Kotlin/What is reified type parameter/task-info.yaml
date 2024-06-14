@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: these are parameters that are not erased by the compiler but instead store
+      their type information at runtime
+  - text: the parameter that can be omitted when passing parameter type
+  - text: they return lambda expressions
+  - text: they allow us to use higher-order features without overhead
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/26480#comment
+status: Solved
+record: -1
+local_check: false

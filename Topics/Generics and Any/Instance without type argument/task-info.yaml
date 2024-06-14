@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: An exception will occur after executing this line
+  - text: The field <b>t</b> of the created instance will store a value of <b>Any</b>
+  - text: It won't compile
+  - text: The field <b>t</b> of the created instance will store a value of <b>Nothing</b>
+  - text: The field <b>t</b> of the created instance will store a value of <b>String</b>
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15350#comment
+status: Solved
+record: -1
+local_check: false

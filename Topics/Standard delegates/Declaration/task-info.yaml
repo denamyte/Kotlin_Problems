@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "<code>var p: String = delegate</code>"
+  - text: "<code>var p by delegate: String</code>"
+  - text: "<code>val p: String by delegate</code>"
+  - text: "<code>var p: String is delegate</code>"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/31472#comment
+status: Solved
+record: -1
+local_check: false

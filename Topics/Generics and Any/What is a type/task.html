@@ -1,0 +1,13 @@
+<div class="step-text">
+<p></p>
+<p>What type is chosen as parameter type <code class="language-kotlin">T</code>  in the following code:</p>
+<pre><code class="language-kotlin">val box = Box(0L)
+box.set(10L)</code></pre>
+<p>Here, <code class="language-kotlin">Box</code> is a generic class:</p>
+<pre><code class="language-kotlin">class Box&lt;T&gt; (var value: T) {
+
+    fun set(newValue: T) {
+        value = newValue
+    }
+}</code></pre>
+</div>

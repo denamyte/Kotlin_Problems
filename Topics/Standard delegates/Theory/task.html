@@ -1,0 +1,119 @@
+<div class="step-text">
+<p>In addition to class delegates, Kotlin has a robust functionality known as <strong><a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a delegated property is a type of property that is not backed by a class field. | Instead, getting and setting of the property are delegated to another piece of code. This abstraction allows for shared functionality between similar properties. For instance, you can store property values in a map instead of using separate fields. Delegated properties are used by declaring the property and the delegate that it uses. The delegate has and methods which take over the get and set methods, respectively, corresponding to the property. It's important to keep delegated properties focused and avoid unnecessary delegation. Each delegated property should do one thing well and avoid creating god-like delegates that try to do too much. Additionally, not every property needs to be delegated. Use delegation when it provides a clear benefit, such as reducing boilerplate code or improving performance.">delegated properties</a></strong>. This feature allows the delegation of getter and setter methods of a property to another object. This capability proves valuable when it comes to reusing common behavior, separating logic, or calculating a value only once. While the details of creating and utilizing delegated properties are covered in a separate topic, we will provide a concise overview here. We will also explore the <strong><a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a standard delegate refers to pre-built delegates that provide common functionality for properties, such as lazy initialization, observing property changes, vetoing property changes, enforcing non-nullability, and storing properties in a map. | These standard delegates make it easier and more efficient to implement these functionalities. However, it's important to use delegation judiciously, focusing on one task per delegated property and avoiding unnecessary delegation to keep the code readable and maintainable. Standard delegates are covered in detail in another topic.">standard delegated</a> properties</strong> in Kotlin.</p>
+<h5 id="overview-of-delegated-properties">Overview of delegated properties</h5>
+<p>Unlike traditional properties, delegated properties are not backed by a class field. Instead, they <strong>delegate getting and setting to another piece of code</strong>. This abstraction allows for shared functionality between similar properties. For instance, you can store property values in a map instead of using separate fields.</p>
+<p>Delegated properties are used by declaring the property and the delegate that it uses. The <code class="language-kotlin">by</code> <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a keyword is a word that has a special meaning in the language and cannot be changed by the programmer. | It is used to define the structure and behavior of the code. Examples of keywords in Kotlin include `fun` (used to define a function), `var` (used to define a variable), and `if` (used to define a conditional statement). Keywords are reserved words in Kotlin and cannot be used as identifiers.">keyword</a> indicates that the property is controlled by the provided delegate instead of its own field.</p>
+<p>For example:</p>
+<pre><code class="language-kotlin">class Example {
+    var p: String by Delegate()
+}</code></pre>
+<p>The syntax is as follows: <code class="language-kotlin">val/var &lt;property name&gt;: &lt;Type&gt; by &lt;delegate&gt;</code>.</p>
+<p>Under the hood, the delegate has the <code class="language-kotlin">getValue()</code> and <code class="language-kotlin">setValue()</code> methods, which take over the <code class="language-kotlin">get()</code> and <code class="language-kotlin">set()</code> methods, respectively, corresponding to the property.</p>
+<h5 id="standard-delegates">Standard delegates</h5>
+<p>The Kotlin <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a standard library is a fundamental part of the Kotlin programming language that is included with the language and provides essential functionality for working with the language. | It offers a robust set of tools to handle various programming tasks efficiently, and it is designed to work seamlessly with Kotlin's language features. The standard library includes functions, classes, and methods that provide pre-built functionality, which can be invoked or used in your code, saving you the time and effort of writing these functionalities from scratch. Examples of functionalities provided by the Kotlin standard library include handling complex math calculations like the sine and cosine of an angle. Standard libraries can be categorized into those that are included with the language and provide essential functionality, and third-party libraries that offer specialized or advanced features.">standard library</a> comes with a set of <strong>standard delegates</strong> that are ready to be used in order to create:</p>
+<ol>
+<li><strong><a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a lazy property is a type of delegated property that delays the initialization of a property until it is first accessed. | The lazy property is implemented using the `lazy` function from the Kotlin standard library, which takes a lambda function and returns an instance of `Lazy&lt;T&gt;`. The first time the lazy property is accessed, the lambda function is executed and the result is cached for future access. This can be useful for properties that are expensive to initialize or rarely used.">Lazy properties</a></strong>: the value is computed only during the first access.</li>
+<li><strong><a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an observable property is a type of property that triggers a lambda function every time its value changes. | This allows for change notification or updating of other related properties. This is useful when you want to execute a block of code in response to a property value modification. It's important to note that observable properties are not the same as lazy properties, which only initialize a value when it's first accessed, or vetoable properties, which allow for the vetoing of a property value change.">Observable properties</a></strong>: listeners are notified about changes to this property.</li>
+<li><strong><a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a vetoable property is a type of property delegate that allows a lambda function to decide whether to accept or reject a new value before it is set. | The lambda function is called with the old and new value of the property before the new value is set. If the function determines that the new value should not be accepted, the property retains its old value. An example of this is a delegate that ensures a property can only be set to a value greater than its current value.">Vetoable properties</a></strong>: allowing a <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a lambda function is also known as a lambda expression. | It is a function that can be created at runtime, which is useful when calling functions from the Kotlin standard library for data processing. Lambda functions help reduce code length and make it more concise. They allow you to use code and data as a function's argument. A lambda expression can be used directly or passed as an argument using a function reference. Lambda functions are first-class citizens in the Kotlin language, just like top-level functions. They can be declared with or without arguments, and if there are no arguments, the arrow symbol is not required.">lambda function</a> to decide if a new value should be accepted or rejected.</li>
+<li><strong>NotNull properties</strong>: a property delegate for a non-null property that must be initialized before it is accessed.</li>
+<li><strong>Storing properties in a map</strong>: instead of using a separate field for each property, properties can be stored in a map.</li>
+</ol>
+<p>Let's further explore each one of them.</p>
+<p><strong>1) Lazy properties: </strong>The <code class="language-kotlin">lazy</code> function takes a lambda and returns an instance of <code class="language-kotlin">Lazy&lt;T&gt;</code>, which serves as a delegate for implementing a lazy property. The first call to <code class="language-kotlin">get()</code> executes the lambda passed to <code class="language-kotlin">lazy()</code> and remembers the result. Subsequent calls to <code class="language-kotlin">get()</code> simply return the remembered (cached) result.</p>
+<p>Let's take an example:</p>
+<pre><code class="language-kotlin">val lazyValue: String by lazy {
+    print("Computed! ")
+    "Hello"
+}
+
+fun main() {
+    println(lazyValue) // Computed! Hello
+    println(lazyValue) // Hello
+}</code></pre>
+<p>In this example, the code inside the lambda gets executed only during the first access to the <code class="language-kotlin">lazyValue</code> property, and the result will be cached. After that, any additional access to this value will only retrieve the cached value without executing any code, so the second <code class="language-kotlin">println()</code> will only print the value <code class="language-kotlin">"Hello"</code>. </p>
+<p><strong>2) Observable properties: </strong>The <code class="language-kotlin">observable</code> delegate allows for a lambda to be triggered any time the value of the property changes, resulting in change notifications or updating of other related properties.</p>
+<p>Let's look at an example:</p>
+<pre><code class="language-kotlin">import kotlin.properties.Delegates
+
+class User {
+    var rank: String by Delegates.observable("&lt;no rank&gt;") {
+        prop, old, new -&gt; println("${prop.name}: $old -&gt; $new")
+    }
+}
+
+fun main() {
+    val user = User()
+    user.rank = "first"  // rank: &lt;no rank&gt; -&gt; first
+    user.rank = "second" // rank: first -&gt; second
+}</code></pre>
+<p>In this example, the <code class="language-kotlin">User</code> class has the <code class="language-kotlin">rank</code> property, which is delegated to an <code class="language-kotlin">observable</code> delegate. The <code class="language-kotlin">observable</code> delegate takes two arguments: the <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an initial value is a value that is assigned to a variable when it is declared and initialized. | When you declare a variable with the `val` keyword, it is read-only, meaning its value cannot be changed after it has been initialized. The initial value can be a literal value, a constant, a function call, or any other expression that returns a value. It is important to note that if you declare a variable with the `var` keyword, it is mutable and its value can be changed after it has been initialized. When declaring a variable with an initial value, you can use the `=` symbol followed by the value. This creates an object, but it is not necessarily resource- or time-consuming for the compiler. However, creating instances of more complex classes can be expensive. To tackle this issue, you can use lazy initialization, which creates an object at the exact point when the first reference to it occurs. This means that you don't need to waste time by immediately using your program's resources to allocate memory to objects that are not required from the outset. In summary, an initial value in Kotlin is a value that is assigned to a variable when it is declared and initialized. When using the `val` keyword, the variable is read-only and its value cannot be changed after initialization.">initial value</a> of the property (<code class="language-kotlin">"&lt;no rank&gt;"</code> in this case) and a lambda function that is called whenever the property is changed.</p>
+<p>The lambda function takes three arguments: a reference to the property being changed (<code class="language-kotlin">prop</code>), the old value of the property (<code class="language-kotlin">old</code>), and the new value of the property (<code class="language-kotlin">new</code>). In this example, the lambda function simply prints the name of the <code class="language-kotlin">rank</code> property followed by its old and new values whenever it is changed.</p>
+<p></p>
+<div class="alert alert-warning">When working with <code class="language-kotlin">observable</code>, <code class="language-kotlin">vetoable</code>, or <code class="language-kotlin">notNull</code> delegates in your code, you must import the <code class="language-kotlin">kotlin.properties.Delegates</code> package.</div>
+<p><strong>3) Vetoable properties: </strong>The <code class="language-kotlin">vetoable</code> delegate works similarly to the <code class="language-kotlin">observable</code> delegate, but with some key differences. The lambda function is called before a new value is set, and it allows the function to decide if the new value should be accepted or rejected.</p>
+<p>Let's consider an example:</p>
+<pre><code class="language-kotlin">import kotlin.properties.Delegates
+
+var max: Int by Delegates.vetoable(0) { prop, old, new -&gt;
+    new &gt; old
+}
+
+fun main() {
+    println(max) // 0
+    max = 10
+    println(max) // 10
+    max = 5
+    println(max) // 10
+}</code></pre>
+<p>In this example, the <code class="language-kotlin">vetoable</code> delegate ensures that <code class="language-kotlin">max</code> can only be set to a value greater than its current value. If an attempt is made to set it to a lower value, the new value is discarded and the property retains the old one.</p>
+<p><strong>4) NotNull properties: </strong><code class="language-kotlin">notNull</code> is a property delegate for a non-null property that must be initialized before it is accessed.</p>
+<p>Let's take an example:</p>
+<pre><code class="language-kotlin">import kotlin.properties.Delegates
+
+class Person{
+    var name: String by Delegates.notNull()
+}
+
+fun main() {
+    val person = Person()
+    person.name // Throws IllegalStateException:
+                // Property name should be initialized before get.
+    person.name = "Ahmed Omar"
+    println(person.name) // Prints "Ahmed Omar"
+}</code></pre>
+<p>In this example, the <code class="language-kotlin">notNull</code> delegate ensures that the <code class="language-kotlin">name</code> property of the <code class="language-kotlin">Person</code> class is initialized before it is accessed. If an attempt is made to access it before it is initialized, an exception is thrown.</p>
+<p><strong>5) Storing properties in a map: </strong>Properties can be stored in a <code class="language-kotlin">MutableMap</code> or <code class="language-kotlin">Map</code> to back mutable or <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an immutable is a type of object or variable that, once initialized, cannot be changed. | This helps ensure the integrity of data and prevents unintended modifications. For example, a list of pages in a book may be an immutable collection, where the content cannot be altered over time. In contrast, a mutable collection allows for changes to be made, such as adding, removing, or updating stored items. Immutable variables, declared using the `val` keyword, are particularly useful for exposing internal state in a safe and controlled manner, as they cannot be modified by external code.">immutable</a> properties, respectively.</p>
+<p>Look at the following example:</p>
+<pre><code class="language-kotlin">class User(val map: MutableMap&lt;String, Any?&gt;) {
+    var name: String by map
+    var age: Int     by map
+}
+
+fun main() {
+    val user = User(mutableMapOf(
+        "name" to "Ahmed Omar",
+        "age"  to 25
+    ))
+
+    println(user.name) // Prints "Ahmed Omar"
+    println(user.age)  // Prints 25
+
+    user.name = "Ahmed Omar"
+    user.age = 30
+
+    println(user.name) // Prints "Ahmed Omar"
+    println(user.age)  // Prints 30
+}</code></pre>
+<p>In this example, the <code class="language-kotlin">User</code> class is defined, which takes a <code class="language-kotlin">MutableMap</code> as a constructor parameter. The <code class="language-kotlin">name</code> and <code class="language-kotlin">age</code> properties of the <code class="language-kotlin">User</code> class are delegated to the <code class="language-kotlin">map</code> property, which means that their values are stored in the map instead of separate fields for each property.</p>
+<h5 id="practical-use-cases">Practical use cases</h5>
+<p>Standard delegated properties in Kotlin can be utilized in various practical scenarios. Some of those include:</p>
+<ol>
+<li><strong>Lazy initialization</strong>: The <code class="language-kotlin">lazy</code> delegate can be used to initialize a property only when it is first accessed; it is useful for properties that are expensive to compute or that might not be needed at all.</li>
+<li><strong>Observing property changes</strong>: The <code class="language-kotlin">observable</code> delegate can be used to observe changes to a property and perform actions when the property is changed, such as updating the UI or validating the new value.</li>
+<li><strong>Vetoing property changes</strong>: The <code class="language-kotlin">vetoable</code> delegate can be used to veto changes to a property based on custom logic, such as ensuring that a value remains within a certain range or meets certain criteria.</li>
+<li><strong>NotNull properties</strong>: The <code class="language-kotlin">notNull</code> delegate can be used in situations where a property must be initialized before it is accessed and where accessing it before it is initialized should result in an exception being thrown. This can be useful for ensuring that certain preconditions are met before an object is used.</li>
+<li><strong>Storing properties in a map</strong>: The <code class="language-kotlin">map</code> and <code class="language-kotlin">mutableMap</code> delegates can be used to store properties in a map instead of separate fields for each property; they are useful for dynamic data structures or for serializing and deserializing objects.</li>
+</ol>
+<h5 id="conclusion">Conclusion</h5>
+<p>Standard delegated properties in Kotlin provide a flexible and efficient way to implement common behavior for properties. They can simplify code, improve composition and modularity, and provide flexibility to change the behavior of objects, thus enhancing the overall efficiency and <a class="theory-lookup not-relevant" href="/learn/step/31469" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, readability refers to the clarity and ease of understanding the code. | It involves organizing the code in a way that makes it easy to read and follow, such as declaring constants in the object to which they relate, rather than all at the top of the file. This is important because programmers often spend more time reading code than writing it, and clear, concise code can improve productivity and reduce errors. Code style conventions can help maintain readability by providing recommendations for formatting and organizing code. These conventions are not strict rules, but following them can make code more steady and consistent.">readability</a> of your Kotlin code.</p>
+</div>

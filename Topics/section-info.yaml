@@ -1,2 +1,9 @@
 content:
   - Building your own delegate
+  - Standard delegates
+  - Generics and Any
+  - String formatting
+  - Getting substrings
+  - String arrays
+  - Inline functions and reified types in Kotlin
+  - Type Bounds

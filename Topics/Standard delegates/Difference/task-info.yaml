@@ -1,0 +1,18 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "Delegated properties cannot be used with mutable data, while traditional\
+    \ properties can."
+  - text: "Delegated properties delegate getting and setting to another piece of code,\
+    \ while traditional properties do not."
+  - text: "Delegated properties cannot be observed, while traditional properties can."
+  - text: "Delegated properties are backed by a class field, while traditional properties\
+    \ are not."
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/31471#comment
+status: Solved
+record: -1
+local_check: false

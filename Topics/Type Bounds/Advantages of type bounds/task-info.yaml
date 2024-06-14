@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: They provide multiple inheritance
+  - text: They make code reusable
+  - text: We can restrict type parameters using type bounds
+  - text: The amount of code can be reduced thanks to type bounds
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/21744#comment
+status: Solved
+record: -1
+local_check: false

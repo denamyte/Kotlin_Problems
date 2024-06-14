@@ -1,0 +1,10 @@
+content:
+  - Theory
+  - Correct the usage of a non-generic class
+  - Initialize an object of a generic class
+  - What is wrong
+  - Signature of generic class
+  - What is a type
+  - Instance without type argument
+  - Make it generic
+  - Write a generic function
