@@ -1,0 +1,117 @@
+<div class="step-text">
+<p>If you would like to create a superhero, what would you do? Of course, you would open your favorite development environment and create a <code class="language-kotlin">Superhero</code> class!</p>
+<p>As appropriate, our superhero will need a set of special items, including, for example, a magic cloak or a hammer. Here may come a problem. What is the best way to organize the classes describing the equipment? And how can you show that only the <code class="language-kotlin">Superhero</code> class can use them?</p>
+<p>Here appears our savior — an instrument called <strong><a class="theory-lookup not-relevant" href="/learn/step/14723" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a nested class is a class declared inside another class. | It can access the members of its outer class and increases encapsulation by hiding code from other classes. A nested class marked as 'inner' can access the members of its outer class, while a simple nested class cannot. A use case for inner classes is when you want to create a class that is specific to the outer class and cannot exist without it, such as a ribbon bow for a cat class.">nested classes</a></strong>. They help us group classes logically and increase the encapsulation of our code.</p>
+<h5 id="what-is-a-nested-class">What is a nested class?</h5>
+<p>You can create a class within another class and such classes are called <strong>nested</strong>.</p>
+<p>Take a look at our superhero: </p>
+<pre><code class="language-kotlin">class Superhero {
+    class MagicCloak {
+    }
+
+    class Hammer {
+    }
+}</code></pre>
+<p>Both classes  <code class="language-kotlin">MagicCloak</code> and <code class="language-kotlin">Hammer</code> are nested classes. The <code class="language-kotlin">Superhero</code> class is often called an <strong><a class="theory-lookup not-relevant" href="/learn/step/14723" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an outer class is a class that contains one or more nested classes, also known as inner classes. | Unlike simple nested classes, which aren't bound to the outer class and require creating an object to use them outside the outer class, an inner class is associated with an instance of its enclosing class. This means that an inner class can access members of its outer class. Creating an inner class can increase the encapsulation of your code and make it more organized. For example, if you have a class representing a cat, and you want the cat to have a ribbon bow, you can create a nested class for the bow. This inner class would be associated with an instance of the cat class, allowing it to access the cat's properties and methods. To create an inner class, you need to instantiate the outer class first. The inner class's constructor is called with an instance of the containing class. This means that the inner class has access to the outer class's members and can use them as needed.">outer class</a></strong><em>,</em><strong><em> </em></strong>while a nested class, along with its properties, functions, and constructors, is a <strong>member </strong>of an outer class.</p>
+<p>The problem here is that <code class="language-kotlin">MagicCloak</code> and <code class="language-kotlin">Hammer</code> aren't really bound to <code class="language-kotlin">Superhero</code>. It's just classes:</p>
+<pre><code class="language-kotlin">class Superhero {
+    val power = 1000
+
+    class MagicCloak {
+        // you cannot access something from Superhero here
+        val magicPower = 100
+    }
+    // you need to create a MagicCloak object to access its members
+    val magicPower = power * MagicCloak().magicPower
+
+    class Hammer {
+        // you cannot access power property from Superhero here
+        val mightPower = 100
+    }
+    val mightPower = power * Hammer().mightPower
+}</code></pre>
+<p>If you need to use <code class="language-kotlin">MagicCloak</code> and <code class="language-kotlin">Hammer</code> outside the class <code class="language-kotlin">Superhero</code>, you must create the corresponding objects:</p>
+<pre><code class="language-kotlin">val cloak = Superhero.MagicCloak()
+val hammer = Superhero.Hammer()</code></pre>
+<p>As you can see, a simple nested class is not really connected with the outer class. In this topic, we are going to focus on a special case of nested classes — <strong><a class="theory-lookup not-relevant" href="/learn/step/14723" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an inner class is a special case of a nested class that can access the members of its outer class. | It carries a reference to an object of its outer class, which means that to use an inner class, we must first instantiate an outer class. The main idea of inner classes is to hide some code from other classes and increase encapsulation. An inner class is associated with an instance of their enclosing class, and its constructor is called with an instance of the containing class. This increases the encapsulation of the code, making it accessible only through the outer class.">inner classes</a></strong>.</p>
+<h5 id="inner-class">Inner class</h5>
+<p>A regular nested class cannot access members of its outer class. But a nested class marked as an <strong>inner</strong> class can.</p>
+<p>Let's move to another example. Imagine that you are writing a class <code class="language-kotlin">Cat</code> representing cats. Cats may have a lot of properties and functions, but we may also use inner class structures. Let's say you want a cat to have a ribbon bow; then you need to create a new class <code class="language-kotlin">Bow</code>. This class <code class="language-kotlin">Bow</code> needs to be quite small and specific, and you know you won't need a bow without a cat. The solution is to create a class <code class="language-kotlin">Bow</code> inside the class <code class="language-kotlin">Cat</code>:</p>
+<pre><code class="language-kotlin">class Cat(val name: String) {
+    inner class Bow(val color: String) {
+        fun printColor() {
+            println("The cat named $name has a $color bow.")
+        }
+    }
+}</code></pre>
+<p>Let's create a cat named Bob with a red bow:</p>
+<pre><code class="language-kotlin">fun main() {
+    val cat: Cat = Cat("Bob")
+    val bow: Cat.Bow = cat.Bow("red")
+
+    bow.printColor()
+}</code></pre>
+<p>We have created an instance of <code class="language-kotlin">Cat</code> and then created an instance of <code class="language-kotlin">Bow</code> using quite an interesting syntax.</p>
+<p>The output for the code above will be:</p>
+<pre><code class="language-no-highlight">The cat named Bob has a red bow.</code></pre>
+<p>Remember that to use inner classes, we must create an<em> </em>instance of the outer class<em>. </em>In our example, we created a <code class="language-kotlin">Cat</code>. And you can use the inner class freely in the outer class:</p>
+<pre><code class="language-kotlin">class Cat(val name: String) {
+    inner class Bow(val color: String) {
+        fun printColor() {
+            println("The cat named $name has a $color bow.")
+        }
+    }
+    val catBow = Bow("Green")
+}</code></pre>
+<h5 id="scope-of-the-inner-class"> Scope of the inner class</h5>
+<p>Now let's discuss what we can see from the inner class and who can access the inner class from outside.</p>
+<p>Here is our class <code class="language-kotlin">Cat</code> with a new function <code class="language-kotlin">sayMeow</code> and an inner class <code class="language-kotlin">Bow</code> with a new function <code class="language-kotlin">putOnABow</code>.</p>
+<pre><code class="language-kotlin">class Cat(val name: String) {
+    fun sayMeow() {
+        println("$name says: \"Meow\".")
+    }
+
+    inner class Bow(val color: String) {
+        fun putOnABow() {
+            sayMeow()
+            println("The bow is on!")
+        }
+
+        fun printColor() {
+            println("The cat named $name has a $color bow.")
+        }
+    }
+}</code></pre>
+<p>You can see that inside the <code class="language-kotlin">Bow</code> class, we have access to all members of the class <code class="language-kotlin">Cat</code>: the <code class="language-kotlin">name</code> property and the <code class="language-kotlin">sayMeow</code> function.</p>
+<p>How about creating a cat named Princess with a golden bow to prove that our code works?</p>
+<pre><code class="language-kotlin">fun main() {
+    val cat: Cat = Cat("Princess")
+    val bow: Cat.Bow = cat.Bow("golden")
+
+    bow.printColor()
+    bow.putOnABow()
+}</code></pre>
+<p>And, yes, the bow is on!</p>
+<pre><code class="language-no-highlight">The cat named Princess has a golden bow.
+Princess says: "Meow".
+The bow is on!</code></pre>
+<p>You may encounter inner classes that have members with the same names as their outer classes. For example, both <code class="language-kotlin">Cat</code> and <code class="language-kotlin">Bow</code> may have the property <code class="language-kotlin">color</code>. How can you access the outer <a class="theory-lookup not-relevant" href="/learn/step/14723" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a class member is a component that belongs to a class and can be either a property or a function. | Class members can be accessed and used within the class they belong to. When it comes to functions, member functions are functions that are defined within a class and can access the class's fields. They are also called methods and are used to implement a common behavior for a set of objects that belong to the same class. Class members can also be nested classes, which are classes defined within another class. Inner classes, a type of nested class, can access the members of their outer class, while regular nested classes cannot.">class members</a> from the inner class in such cases? The <a href="https://kotlinlang.org/docs/this-expressions.html#qualified-this" rel="noopener noreferrer nofollow" target="_blank">qualified this</a> expression will help! Write <code class="language-kotlin">this@Cat.color</code> in the inner class code and you will get the color of the outer class, while using <code class="language-kotlin">color</code> or <code class="language-kotlin">this.color</code> will always give you the color property of the current class:</p>
+<pre><code class="language-kotlin">class Cat(val name: String, val color: String) {
+    inner class Bow(val color: String) {
+        fun printColor() {
+            println("The cat named $name is ${this@Cat.color} and has a $color bow.")
+        }
+    }
+}</code></pre>
+<p>Now let's put all the rules together!</p>
+<h5 id="rules-for-inner-classes">Rules for Inner classes</h5>
+<p>An inner class can access all members of its outer class.</p>
+<p>To access the inner class, you need to instantiate the outer class first, as inner classes are associated with an <a class="theory-lookup not-relevant" href="/learn/step/14723" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an instance refers to an object or an instance of a class that is created during runtime. | It is a subtype of every known type in Kotlin, meaning it can represent a value of any type in terms of type checking. This is particularly useful in situations where a function demands a return type, but it is impossible to return a value, such as when calculating a percentage if the value is zero. In such cases, a function that returns `Instance` can be used. The concept of instance is also related to threading, where only one thread can execute code in a synchronized method of a particular instance. This means that different threads can execute methods of different objects at the same time, a concept that can be summarized as one thread per instance.">instance</a> of their enclosing class. In the example below, the constructor of the inner class <code class="language-kotlin">Inner</code> is called with an instance of the containing class:</p>
+<pre><code class="language-kotlin">val outer = Outer()
+val inner = outer.Inner()</code></pre>
+<h5 id="reasons-to-use-inner-classes">Reasons to use Inner Classes</h5>
+<p>Have you noticed what our <code class="language-kotlin">Superhero</code> and <code class="language-kotlin">Cat</code> examples have in common?  Sure you have — we hid our inner classes from the outside world. This increases the <strong>encapsulation</strong> of the code — now only <code class="language-kotlin">Cat</code> may put on a bow.</p>
+<p>Using the inner classes structure, you can also <strong>organize </strong>your code more conveniently. With all the magic equipment for <code class="language-kotlin">Superhero</code> being held in one place, it is easier to navigate between classes and to understand the structure of your code.</p>
+<h5 id="conclusion">Conclusion</h5>
+<ul><li><p>A class declared inside another class is called nested.</p></li><li><p>An inner class is a special case of a nested class that can access the members of its outer class.</p></li><li><p>Inner classes carry a reference to an object of an outer class, so to use inner classes, we must instantiate an outer class first.</p></li><li><p>The main idea of inner classes is to hide some code from other classes and increase encapsulation.</p></li></ul>
+</div>

@@ -7,3 +7,5 @@ content:
   - String arrays
   - Inline functions and reified types in Kotlin
   - Type Bounds
+  - Working with strings
+  - Nested and inner classes
