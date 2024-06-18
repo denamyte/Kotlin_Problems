@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: It specifies that the option should have multiple values
+  - text: It makes the option mandatory
+  - text: It specifies that the option should have multiple short names
+  - text: It allows the option to be specified multiple times on the command line
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/32388#comment
+status: Solved
+record: -1
+custom_name: What does multiple() do?
+local_check: false

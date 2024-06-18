@@ -1,0 +1,160 @@
+<div class="step-text">
+<p>The command line is an interface that allows the user to interact with the operating system through text commands. A command-line parser is a tool that interprets these commands. It takes a string of text (entered by the user or from a file) and turns it into objects that the program can use.</p>
+<h5 id="introduction-to-kotlinx-cli">Introduction to kotlinx-cli</h5>
+<p><code class="language-kotlin">kotlinx-cli</code> is a library for creating command-line applications in Kotlin. Let's look at how to install <code class="language-kotlin">kotlinx-cli</code>. First, you need to add the following dependency in your project's <code class="language-kotlin">build.gradle</code> file:</p>
+<pre><code class="language-kotlin">dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
+}
+</code></pre>
+<h5 id="main-concepts-of-kotlinx-cli">Main concepts of kotlinx-cli</h5>
+<p>After installing <code class="language-kotlin">kotlinx-cli</code> in your project, you can start using it. Below are some of the main concepts and examples of their use.</p>
+<p>Example 1: Creating command-line arguments</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val name by parser.option(ArgType.String, description = "Your name").required()
+    parser.parse(args)
+    println("Hello, $name!")
+}
+</code></pre>
+<p>Output for the arg <code class="language-kotlin">--name Jon</code>:</p>
+<pre><code class="language-kotlin">Hello, Jon!</code></pre>
+<p>Example2: Creating command-line arguments with several values specified in the command-line string</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val name by parser.option(ArgType.String, description = "Your name").multiple()
+    parser.parse(args)
+    println("Hello, ${name[0]}!")
+    println("Hello, ${name[1]}!")
+}</code></pre>
+<p>Output for the arg <code class="language-kotlin">--name John --name Doe</code>:</p>
+<pre><code class="language-kotlin">Hello, John!
+Hello, Doe!</code></pre>
+<p>Example 3: Using flags and options</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val verbose by parser.option(ArgType.Boolean, shortName = "v", description = "Enable verbose mode")
+    parser.parse(args)
+    if (verbose == true) {
+        println("Verbose mode is enabled")
+    } else {
+        println("Verbose mode is not enabled")
+    }
+}
+</code></pre>
+<p>Example 4: Working with various data types</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val count by parser.option(ArgType.Int, description = "Number of times to repeat").default(1)
+    parser.parse(args)
+    repeat(count) {
+        println("Hello, Kotlin!")
+    }
+}
+</code></pre>
+<h5 id="advanced-topics-in-kotlinx-cli">Advanced topics in kotlinx-cli</h5>
+<p><code class="language-kotlin">kotlinx-cli</code> provides several advanced features that can be useful in more complex applications.</p>
+<p>Example 1: Creating subcommands</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+@OptIn(ExperimentalCli::class)
+class MyCommand(parser: ArgParser): Subcommand(parser.toString(), "myCommand") {
+    val parser.option by option(ArgType.Int, description = "Some option")
+    override fun execute() {
+        println("My command is executed with option value $option")
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val command = MyCommand(parser)
+    parser.parse(args)
+    command.execute() // printing "My command is executed with option value null"
+                      // null because we do not implement options
+}
+</code></pre>
+<p>Example 2: Customizing error messages</p>
+<pre><code class="language-kotlin">import jdk.internal.joptsimple.OptionException
+import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val name by parser.option(ArgType.String, description = "Your name").required()
+    try {
+        parser.parse(args)
+    } catch (e: OptionException) {
+        println("Sorry, you must provide your name.")
+    }
+}
+</code></pre>
+<p>Example 3: Handling exceptions and errors</p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val count by parser.option(ArgType.Int, description = "Number of times to repeat").default(1)
+    try {
+        parser.parse(args)
+        repeat(count) {
+            println("Hello, Kotlin!")
+        }
+    } catch (e: IllegalArgumentException) {
+        println("Invalid argument: ${e.message}")
+    }
+}
+</code></pre>
+<h5 id="practical-example-of-using-kotlinx-cli">Practical example of using kotlinx-cli</h5>
+<p>Let's develop a simple application that will use some of the concepts discussed above.</p>
+<p>Example: Creating a simple application using <code class="language-kotlin">kotlinx-cl</code></p>
+<pre><code class="language-kotlin">import kotlinx.cli.*
+
+/**
+ * @OptIn(ExperimentalCli::class)
+ * This annotation marks an experimental API for working with command-line arguments.
+ * Beware using the annotated API, especially if you're developing a library, since your
+ * library might become binary incompatible with the future versions of the CLI library.
+ * Any usage of a declaration annotated with @ExperimentalCli must be accepted either by annotating
+ * that usage with the UseExperimental annotation, e.g., @UseExperimental(ExperimentalCli::class),
+ * or by using the compiler argument
+ */
+@OptIn(ExperimentalCli::class)
+class GreetCommand(parser: ArgParser): Subcommand(parser.toString(), "greet") {
+    val names by parser.option(ArgType.String, description = "User's name").required()
+    val times by parser.option(ArgType.Int, description = "How many times to greet").default(1)
+
+    override fun execute() {
+        repeat(times) {
+            println("Hello, $names!")
+        }
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val parser = ArgParser("example")
+    val greetCommand = GreetCommand(parser)
+    parser.parse(args)
+    greetCommand.execute()
+}
+</code></pre>
+<p>Output for the arg <code class="language-kotlin">--names Jon --times 5</code> :</p>
+<pre><code class="language-kotlin">Hello, Jon!
+Hello, Jon!
+Hello, Jon!
+Hello, Jon!
+Hello, Jon!</code></pre>
+<h5 id="best-practices-and-recommendations">Best practices and recommendations</h5>
+<ul>
+<li>Describe each option and each subcommand. This will help users understand what your program does.</li>
+<li>Always handle exceptions that may occur when parsing arguments. This will help prevent unexpected crashes of your program.</li>
+<li>Use argument types for user input validation. This will ensure that your program gets data in the correct format.</li>
+</ul>
+<h5 id="conclusion">Conclusion </h5>
+<p>We have covered the basic concepts and some advanced features of working with <code class="language-kotlin">kotlinx-cli</code> and provided several practical examples. With this knowledge, you will be able to create powerful and flexible command-line applications in Kotlin.</p>
+</div>

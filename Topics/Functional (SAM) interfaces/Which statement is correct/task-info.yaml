@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: Functional (SAM) interfaces can have multiple abstract methods.
+  - text: You cannot use Java functional interfaces directly in Kotlin.
+  - text: Kotlin functional interfaces can be instantiated using lambda expressions.
+  - text: Lambda expressions in Kotlin do not support type inference.
+  - text: SAM conversions are applicable to both Java and Kotlin interfaces in Kotlin.
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/38826#comment
+status: Solved
+record: -1
+custom_name: Which statement is correct?
+local_check: false

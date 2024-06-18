@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: The code causes a compile time error
+  - text: "The filter will not work, nothing will be displayed in the console"
+  - text: "INFO: Info Log\\brWARNING: Warning Log"
+  - text: "WARNING: Warning Log"
+  - text: "INFO: Info Log"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/25561#comment
+status: Solved
+record: -1
+local_check: false

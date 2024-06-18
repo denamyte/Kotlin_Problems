@@ -9,3 +9,8 @@ content:
   - Type Bounds
   - Working with strings
   - Nested and inner classes
+  - Type aliases
+  - Introduction to kotlinx-cli
+  - Advanced lambda expressions
+  - Functional (SAM) interfaces
+  - Standard logging for JVM

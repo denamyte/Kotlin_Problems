@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: Main
+  - text: Handlers
+  - text: Logger
+  - text: 'Formatter '
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/25560#comment
+status: Solved
+record: -1
+custom_name: What is the class name?
+local_check: false

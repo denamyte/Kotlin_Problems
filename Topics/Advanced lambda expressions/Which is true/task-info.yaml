@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: The last line inside a lambda is treated as the lambda's return value.
+  - text: Lambdas in Kotlin cannot contain earlier returns.
+  - text: Lambda expressions cannot access variables declared outside the lambda.
+  - text: Capturing variables in a closure refers to the process of passing those variables
+      as arguments to the function.
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/30437#comment
+status: Solved
+record: -1
+custom_name: Which is true?
+local_check: false
