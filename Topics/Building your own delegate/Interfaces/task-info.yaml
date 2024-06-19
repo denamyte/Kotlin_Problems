@@ -1,8 +1,8 @@
 type: choice
 is_multiple_choice: true
 options:
-  - text: <code>ReadOnlyProperty</code> interface
   - text: <code>ReadAndWriteProperty</code> interface
+  - text: <code>ReadOnlyProperty</code> interface
   - text: <code>ReadWriteProperty</code> interface
   - text: <code>ReadProperty</code> interface
 files:

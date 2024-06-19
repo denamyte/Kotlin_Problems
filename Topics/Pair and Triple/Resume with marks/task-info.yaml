@@ -1,0 +1,16 @@
+type: code
+files:
+  - name: src/Main.kt
+    visible: true
+    highlight_level: NONE
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/19958#comment
+status: Solved
+feedback:
+  message: |-
+    <html>[+] Test #1. OK
+
+    1 of 1 test(s) passed.</html>
+  time: "Wed, 19 Jun 2024 16:03:06 UTC"
+record: -1
+submission_language: kotlin

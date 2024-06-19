@@ -14,3 +14,9 @@ content:
   - Advanced lambda expressions
   - Functional (SAM) interfaces
   - Standard logging for JVM
+  - Multi-dimensional list
+  - ArrayDeque
+  - Stack
+  - Companion object
+  - "Require, check, and assert"
+  - Pair and Triple

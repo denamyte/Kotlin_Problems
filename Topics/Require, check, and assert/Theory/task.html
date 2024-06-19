@@ -1,0 +1,96 @@
+<div class="step-text">
+<p></p><p>When programming, we often need to make continuous checks in our code. For example, we might need to check what preconditions we need to have to be able to execute a piece of code, or what happens if a fragment has been executed, or whether the result is what we want or expect.</p>
+<p>With other languages, this can become somewhat tedious, as we need to resort to the use of conditionals and manual exception throwing. Meanwhile, Kotlin uses its own constructs to make our work easier. In Kotlin, <code class="language-kotlin">require</code>, <code class="language-kotlin">check</code>, and <code class="language-kotlin">assert</code> are functions used to verify conditions in code. These functions throw exceptions if the condition they check is not met. However, each of them has a specific use and purpose.</p>
+<p>Throughout this topic, you will learn to develop safer and more reliable code. Let's get to it!</p>
+<h5 id="require">require</h5>
+<p><code class="language-kotlin">fun require(value: Boolean)</code> is used to verify the requirements of the <strong>arguments</strong> of a function or a constructor. If the condition specified in <code class="language-kotlin">require</code> is not met (is false), an <code class="language-kotlin">IllegalArgumentException</code> is thrown.</p>
+<p>Here we have a traditional construction using <code class="language-kotlin">if</code> and <code class="language-kotlin">throw</code>. We use it to check the prerequisites or a parameter of a function.</p>
+<pre><code class="language-kotlin">fun setAgeWithIf(age: Int) {
+    if (age &lt; 0) {
+        throw IllegalArgumentException("Age must not be less than zero")
+    }
+    println("Age is $age")
+}</code></pre>
+<p>Now, we will use <code class="language-kotlin">require</code> to solve this type of task and check a prerequisite for executing a fragment of code.</p>
+<pre><code class="language-kotlin">fun setAgeWithRequire(age: Int) {
+    require(age &gt;= 0) { "Age must not be less than zero" }
+    println("Age is $age")
+}</code></pre>
+<p>In both cases, <code class="language-kotlin">IllegalArgumentException</code> will be thrown if the age is less than zero. However, the version with <code class="language-kotlin">require</code> is more concise and makes the code easier to read and understand.</p>
+<h5 id="check">check</h5>
+<p><code class="language-kotlin">fun check(value: Boolean)</code> is used  to verify the <strong>state</strong> of an object or variable. It throws <code class="language-kotlin">IllegalStateException</code> if the condition specified in <code class="language-kotlin">check</code> is not met (is false), so we need a legal state to perform the code.</p>
+<p>Here's an example of how you might do that with an <code class="language-kotlin">if</code> statement and <code class="language-kotlin">throw</code>:</p>
+<pre><code class="language-kotlin">class MyClassWithIf {
+    private var isInitialized = false
+
+    fun performActionWithIf() {
+        if (!isInitialized) {
+            throw IllegalStateException("Object state is not initialized")
+        }
+        println("Action performed")
+    }
+}</code></pre>
+<p>And now let's see how you can do it with <code class="language-kotlin">check</code>:</p>
+<pre><code class="language-kotlin">class MyClassWithCheck {
+    private var isInitialized = false
+
+    fun performActionWithCheck() {
+        check(isInitialized) { "Object state is not initialized" }
+        println("Action performed")
+    }
+}</code></pre>
+<h5 id="assert">assert</h5>
+<p><code class="language-kotlin">fun assert(value: Boolean)</code> is a function in Kotlin used to verify conditions in the code that are<strong> supposed to be true</strong> unless there is a bug in the program. If the condition specified in <code class="language-kotlin">assert</code> is not met (false), an<strong> AssertionError</strong> is thrown. However, assertions are disabled by default and can be enabled by passing the -ea (enable assertions) option to the Java Virtual Machine (JVM).</p>
+<p>Now, let's see an example using <code class="language-kotlin">if</code> and <code class="language-kotlin">throw</code>:</p>
+<pre><code class="language-kotlin">fun calculateValueWithIf(x: Int): Int {
+    val value = x * 2
+    if (value != x + x) {
+        throw AssertionError("Error in calculation")
+    }
+    return value
+}</code></pre>
+<p>In the above case, if the result of the calculation is incorrect due to a bug in the program, <code class="language-kotlin">AssertionError</code> will be thrown with the message "Error in calculation".</p>
+<p>Here's an example of how you might use <code class="language-kotlin">assert</code>:</p>
+<pre><code class="language-kotlin">fun calculateValueWithAssert(x: Int): Int {
+    val value = x * 2
+    assert(value == x + x) { "Error in calculation" }
+    return value
+}</code></pre>
+<p>In this case, <code class="language-kotlin">AssertionError</code> will be thrown if the calculation is incorrect. As you can see, the former version is more verbose and less concise than the <code class="language-kotlin">assert</code> version. It's important to mention that <code class="language-kotlin">assert</code> is primarily used during development and testing to find and diagnose bugs in the program. It is not recommended to use <code class="language-kotlin">assert</code> to handle error situations at runtime in a production program.</p>
+<h5 id="good-practice">Good practice</h5>
+<p>Here's the procedure you might want to follow when performing your checks:</p>
+<ul>
+<li>Begin by using <code class="language-kotlin">check</code> to verify the initial <strong>state</strong> of the object. If these checks fail, it means the function should not have been invoked in the first place due to incorrect object state.</li>
+<li>Next, use <code class="language-kotlin">require</code> to <strong>validate the function arguments</strong>. If any argument is invalid, it's best to identify that before proceeding with the function's operations, as the function call will eventually fail due to the invalid argument.</li>
+<li>After validating the state and arguments, proceed with the main logic or operations of your function.</li>
+<li>Finally, use <code class="language-kotlin">assert</code> to <strong>ensure that your function has done its job correctly.</strong> This could involve verifying that certain objects have been updated to a new state or ensuring that the return value is as expected.</li>
+</ul>
+<pre><code class="language-kotlin">class MyClass {
+    private var isInitialized = false
+
+    fun initialize() {
+        isInitialized = true
+    }
+
+    fun performAction(x: Int, y: Int): Int {
+        check(isInitialized) { "Object is not initialized" }
+        require(x &gt; 0 &amp;&amp; y &gt; 0) { "Both x and y must be greater than zero" }
+
+        val result = x + y
+
+        assert(result == x + y) { "Error in calculation" }
+
+        return result
+    }
+}</code></pre>
+<p>In the above example:</p>
+<ul>
+<li><code class="language-kotlin">check</code> is used to ensure that the object has been initialized before <code class="language-kotlin">performAction</code> is called.</li>
+<li><code class="language-kotlin">require</code> is used to validate that both x and y are greater than zero.</li>
+<li>The main logic of the function is to add x and y together.</li>
+<li><code class="language-kotlin">assert</code> is used to verify that the result of the addition is correct.</li>
+</ul>
+<p>Such an approach helps ensure that your functions are robust and behave as expected under different conditions, improving the reliability of your code.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, we have learned how to use <code class="language-kotlin">require</code>, <code class="language-kotlin">check</code>, and <code class="language-kotlin">assert</code> to make more concise, secure, and readable code thanks to Kotlin syntax. Are you ready for some tasks?</p>
+</div>

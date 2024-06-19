@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: with a Pair constructor
+  - text: using properties only
+  - text: using the componentN method
+  - text: using the infix function to
+  - text: with the copy() method
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/19953#comment
+status: Solved
+record: -1
+local_check: false
