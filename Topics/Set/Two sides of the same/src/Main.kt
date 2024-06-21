@@ -1,0 +1,1 @@
+fun intsToSet(ints: MutableList<Int>) = ints.toSet()

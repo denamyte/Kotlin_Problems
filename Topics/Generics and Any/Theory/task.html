@@ -72,7 +72,7 @@ class PairNonGeneric(var first: Any, var second: Any) {
         println("second = $second")
     }
 }</code></pre>
-<p>Now, let's do some wrong actions with the class fields and see the difference:</p>
+<p>Now, let's do some wrong actions with the <a class="theory-lookup not-relevant" href="/learn/step/15344" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a class field is a variable or property declared inside a class that stores a value. | Fields can be of various types, such as numbers, strings, or other objects, and they can be accessed and modified within the class they are declared in. The visibility of fields can be controlled using access modifiers such as `private`, `protected`, or `public`. To allow access to a private field from outside the class, getter and setter methods can be used. Fields can also be initialized through a constructor and can have visibility modifiers specified for them.">class fields</a> and see the difference:</p>
 <pre><code class="language-kotlin">fun main() {
     val genericPair: PairGeneric&lt;String, Int&gt; = PairGeneric("John", 8)
     val nonGenericPair: PairNonGeneric = PairNonGeneric("Kate", 18)

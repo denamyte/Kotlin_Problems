@@ -1,2 +1,3 @@
-fun isReversed(pair: Pair<String, String>) =
-    with(pair) { Triple(first, second, (first.lowercase() == second.lowercase()).toString()) }
+fun isReversed(pair: Pair<String, String>): Triple<String, String, Boolean> {
+    // write your code here
+}
