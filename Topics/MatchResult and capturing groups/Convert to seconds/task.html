@@ -1,0 +1,8 @@
+<div class="step-text">
+<p></p><p>You have the following Kotlin program that reads a line of input consisting of multiple time durations separated by one space. Each duration follows the format: <code class="language-kotlin">hh:mm:ss</code>.</p><pre><code class="language-kotlin">fun main() {
+    val regex = """(\d{2}):(\d{2}):(\d{2})""".toRegex()
+    val durations = readln().split(" ")
+
+    convertToSeconds(durations, regex)
+}</code></pre><p>Write the function named <code class="language-kotlin">convertToSeconds</code> that converts each duration to seconds and prints each one on a new line.</p><p></p><div class="alert alert-primary"><p>Note that all input will be in the correct format.</p></div><p></p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">05:03:40 01:12:31 03:07:15</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">18220<br>4351<br>11235</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+</div>

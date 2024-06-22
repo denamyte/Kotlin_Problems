@@ -1,0 +1,14 @@
+<div class="step-text">
+<p></p><p>You have a Kotlin program that finds all the words that start with "s" and end with "e" in a given text using a regular expression.</p><p>Write the missing line of code:</p><pre><code class="language-kotlin">fun main() {
+    val regex = """\bs\w*e\b""".toRegex()
+    val input = "The words like 'simple', 'style', and 'sense' match the pattern, but 'star' does not."
+    var match = regex.find(input)
+
+    while (match != null) {
+        println(match.value)
+        /* __________ */
+    }
+}</code></pre><p>This program will output:</p><pre><code class="language-no-highlight">simple
+style
+sense</code></pre>
+</div>

@@ -1,0 +1,8 @@
+<div class="step-text">
+<p></p><p>You have a Kotlin program that extracts key-value pairs from a single line of input text and prints them as a map. Each key-value pair in the input is separated by a comma and a space; the key is separated from the value by a colon and a space.</p><pre><code class="language-kotlin">fun main() {
+    val regex = """(?&lt;key&gt;\w+): (?&lt;value&gt;[^,]+)""".toRegex()
+    val input = readln()
+
+    printMap(regex, input)
+}</code></pre><p>Your task is to implement the <code class="language-kotlin">printMap</code> function. This function should take a <code class="language-kotlin">Regex</code> object and a <code class="language-kotlin">String</code> as input; find all the key-value pairs in the input <code class="language-kotlin">String</code>; add them to a map; and print the map.</p><ul><li><p><strong>Constraints:</strong></p><ul><li><p>The keys will consist of one or more word characters (letters, digits, and underscores).</p></li><li><p>The values will consist of one or more characters and will not contain commas.</p></li><li><p>Assume the input string is well-formed and follows the key-value pair format described.</p></li></ul></li></ul><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">username: user123, age: 42, role: admin</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">{username=user123, age=42, role=admin}</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+</div>

@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: ab(?:\d+)?cd
+  - text: ab(\d+)cd
+  - text: "ab[\\d+]cd"
+  - text: ab(?&lt;digits&gt;\d+)?cd
+  - text: ab(\d+)?cd
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/41976#comment
+status: Solved
+record: -1
+local_check: false
