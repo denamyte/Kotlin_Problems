@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Creating tables
+  - text: 'For some mathematical operations '
+  - text: Creating matrices
+  - text: Position of an object in 3D space
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10952#comment
+status: Solved
+record: -1
+local_check: false

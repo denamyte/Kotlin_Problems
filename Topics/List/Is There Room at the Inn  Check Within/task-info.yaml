@@ -1,0 +1,9 @@
+type: unsupported
+custom_name: Is There Room at the Inn? Check Within!
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/47996#comment
+status: Unchecked
+record: -1

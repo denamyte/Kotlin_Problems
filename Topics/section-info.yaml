@@ -24,3 +24,10 @@ content:
   - BigInteger
   - Set
   - MatchResult and capturing groups
+  - "Visibility for classes, packages, and modules"
+  - Delegate
+  - CharSequence
+  - Multi-dimensional array
+  - Regexps
+  - List
+  - Mutable List

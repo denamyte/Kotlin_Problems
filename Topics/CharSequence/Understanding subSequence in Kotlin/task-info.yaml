@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "&#x27;to Kotlin&#x27;, CharSequence"
+  - text: "&#x27;Kotlin Programming&#x27;, CharSequence"
+  - text: "&#x27;to Kotlin&#x27;, String"
+  - text: "&#x27;Kotlin &#x27;, CharSequence"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/34741#comment
+status: Solved
+record: -1
+local_check: false

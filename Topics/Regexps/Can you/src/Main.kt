@@ -1,0 +1,1 @@
+fun main() = println(readln().matches(Regex("I can('t)? do my homework on time!")))

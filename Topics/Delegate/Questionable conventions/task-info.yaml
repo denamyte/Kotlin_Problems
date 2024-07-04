@@ -1,0 +1,23 @@
+type: matching
+captions:
+  - <div><p><code>foo</code></p></div>
+  - <div><p><code>bar</code></p></div>
+  - <div><p><code>baz</code></p></div>
+  - <div><p><code> baz(b).printMessage() </code></p></div>
+options:
+  - Basic implementation of the interface
+  - Passing delegate to the constructor
+  - Interface implemented by delegate
+  - Class which utilizes delegate
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/21410#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3

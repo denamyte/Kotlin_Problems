@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: \n
+  - text: \t
+  - text: \b
+  - text: .
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20604#comment
+status: Solved
+record: -1
+local_check: false

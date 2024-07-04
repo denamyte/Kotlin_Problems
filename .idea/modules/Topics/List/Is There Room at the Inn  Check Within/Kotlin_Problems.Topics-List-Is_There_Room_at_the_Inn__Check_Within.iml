@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-List-Is_There_Room_at_the_Inn__Check_Within" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/List/Is There Room at the Inn  Check Within" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Kotlin Problems" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/List/Is There Room at the Inn  Check Within">
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/List/Is There Room at the Inn  Check Within/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/List/Is There Room at the Inn  Check Within/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/List/Is There Room at the Inn  Check Within/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
