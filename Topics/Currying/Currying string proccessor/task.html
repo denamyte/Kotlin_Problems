@@ -1,0 +1,6 @@
+<div class="step-text">
+<p></p>
+<p>Create a function called <code class="java">stringProcessor()</code>. This function will be curried and should accept three strings - a prefix, a main string, and a suffix. It should return a string that results from the concatenation of the prefix string, main string, and suffix string. However, each string should be processed before concatenation: the prefix should be converted to uppercase, the main string should remain unchanged, and the suffix should be in lowercase.</p>
+<p>For instance, using the defined <code class="java">stringProcessor()</code> function, the operation of prefixing "Hello" with "greet: ", and suffixing with ", WELCOME aboard!" should be done as follows:</p>
+<p><code class="java">val result = stringProcessor("greet: ")("Hello")(", WELCOME aboard!") // returns "GREET: Hello, welcome aboard!" </code></p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">greet:<br> Hello<br>, WELCOME abroad!</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">GREET: Hello, welcome abroad!</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+</div>

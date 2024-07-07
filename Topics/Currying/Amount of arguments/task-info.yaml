@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: Two
+  - text: One
+  - text: All arguments of the original function
+  - text: Zero
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/38724#comment
+status: Solved
+record: -1
+local_check: false

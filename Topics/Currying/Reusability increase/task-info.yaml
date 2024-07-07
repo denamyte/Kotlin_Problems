@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: By creating new functions from existing ones with some arguments pre-filled.
+  - text: By eliminating the need for function arguments.
+  - text: By transforming all functions into higher-order functions.
+  - text: By converting all Kotlin code into Java code.
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/38721#comment
+status: Solved
+record: -1
+local_check: false
