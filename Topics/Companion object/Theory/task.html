@@ -61,7 +61,7 @@ println(Player.Companion.defaultSpeed)</code></pre>
     val size = 2
     val square = Companion.size * Companion.size // 100
 }</code></pre>
-<p>Similar to the case of nested objects, you cannot use the properties and the functions of the outer class in the inner one. For example, you cannot do something like that:</p>
+<p>Similar to the case of nested objects, you cannot use the properties and the functions of the outer class in the <a class="theory-lookup not-relevant" href="/learn/step/10707" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, an inner class is a special case of a nested class that is declared inside another class, called the outer class, and can access its members. | An inner class carries a reference to an object of its outer class, so an outer class must be instantiated before an inner class can be used. The main idea of inner classes is to hide some code from other classes and increase encapsulation. They are useful when creating a class that is specific to the outer class and cannot exist without it, such as a ribbon bow for a cat class. To use an inner class, you need to instantiate the outer class first, and the inner class is associated with an instance of its enclosing class.">inner</a> one. For example, you cannot do something like that:</p>
 <pre><code class="language-kotlin">class Deck() {    
     val size = 2
     object Properties {
@@ -110,7 +110,7 @@ println(Player.defaultSpeed)
 
 /* prints 13 */
 println(Player.Factory.create(13).id)</code></pre>
-<p>There is one more limitation: we cannot create a companion object inside another singleton (or a companion object) because that violates the <a class="theory-lookup not-relevant" href="/learn/step/10707" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, global access refers to the ability to access a shared resource from anywhere in the code. | A common way to achieve global access in Kotlin is through the use of a singleton class, which has a single instance and provides a global access point. The `object` keyword in Kotlin provides a simple way to declare a singleton. A companion object is an example of a construct that allows for global access, as it can be accessed without creating an instance of the class.">global access</a> principle.</p>
+<p>There is one more limitation: we cannot create a companion object inside another singleton (or a companion object) because that violates the global access principle.</p>
 <pre><code class="language-kotlin">object OuterSingleton {
     companion object InnerSingleton { // Modifier 'companion' is not applicable inside 'object'  
   

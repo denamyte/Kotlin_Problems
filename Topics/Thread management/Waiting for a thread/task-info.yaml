@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: TimeUnit.SECONDS.sleep(5)
+  - text: thread.interrupt()
+  - text: thread.join(5000)
+  - text: thread.join()
+  - text: thread.join(5)
+  - text: Thread.sleep(5)
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16204#comment
+status: Solved
+record: -1
+local_check: false

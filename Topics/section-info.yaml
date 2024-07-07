@@ -31,3 +31,5 @@ content:
   - Regexps
   - List
   - Mutable List
+  - Nullable and non-nullable types
+  - Thread management
