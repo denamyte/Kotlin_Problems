@@ -1,0 +1,22 @@
+type: table
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/30267#comment
+status: Solved
+record: -1
+rows:
+  - <code>StringBuilder</code>
+  - <code>StringBuffer</code>
+columns:
+  - 1.0
+  - 1.4
+  - 5.0
+selected:
+  - - false
+    - false
+    - false
+  - - false
+    - false
+    - false

@@ -1,0 +1,14 @@
+<div class="step-text">
+<p></p><p>Suppose you have an instance of <code class="language-kotlin">ExecutorService</code>.</p><pre><code class="language-kotlin">val executor: ExecutorService = Executors.newSingleThreadExecutor()
+</code></pre><p>The <code class="language-kotlin">main</code> thread supplies two tasks to it:</p><pre><code class="language-kotlin">val task: Runnable = Runnable {
+    try {
+        TimeUnit.MILLISECONDS.sleep(1000)
+        println("Hello!")
+    } catch (e: Exception) {
+        println(e.stackTraceToString())
+    }
+}
+
+executor.submit(task)
+executor.submit(task)</code></pre><p> </p><p>Select all correct statements:</p>
+</div>

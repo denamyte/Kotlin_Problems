@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: When one thread needs a task queue.
+  - text: When we need to speed up our single-threaded program.
+  - text: When multiple threads need some kind of communication with messages.
+  - text: When we need a queue to access it from different classes in a single-threaded
+      program.
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/22622#comment
+status: Solved
+record: -1
+local_check: false

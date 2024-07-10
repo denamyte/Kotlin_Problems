@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Each non-bulk standard method of this collection is atomic.
+  - text: All combinations of standard methods of this collection are atomic.
+  - text: Any user-defined method that performs an operation with this collection is
+      atomic.
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/22621#comment
+status: Solved
+record: -1
+local_check: false

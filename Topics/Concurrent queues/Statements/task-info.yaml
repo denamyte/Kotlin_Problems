@@ -1,0 +1,14 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: It works according to the LIFE principle
+  - text: It does not throw ConcurrentModificationException
+  - text: It is a thread-safe collection
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/22620#comment
+status: Solved
+record: -1
+local_check: false

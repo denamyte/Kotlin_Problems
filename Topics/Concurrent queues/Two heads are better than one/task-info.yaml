@@ -1,0 +1,14 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: More than two threads
+  - text: 0
+  - text: 2
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/22628#comment
+status: Failed
+record: -1
+local_check: false

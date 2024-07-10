@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Logging and Formatting
+  - text: Multi-threaded Text Generation
+  - text: String Concatenation
+  - text: Generating HTML or XML Markup
+  - text: Thread-safe String Caching
+  - text: Concurrent Data Processing
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/30269#comment
+status: Solved
+record: -1
+local_check: false

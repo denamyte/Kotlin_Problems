@@ -1,0 +1,102 @@
+<div class="step-text">
+<p>One of the most popular kinds of <a class="theory-lookup not-relevant" href="/learn/step/22619" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a concurrent collection is a type of collection that is designed to be used in a multithreaded environment. | They provide synchronized functionality that ensures thread safety, preventing issues such as data inconsistency and race conditions. A common example of a concurrent collection is a concurrent queue, which is often used for communication and data exchange between multiple threads within an application. Concurrent queues, such as ArrayBlockingQueue and LinkedBlockingQueue, follow the first-in-first-out (FIFO) principle, where the first element added to the queue is the first one to be removed. Compared to classic collections, concurrent collections are more efficient when used in a multithreaded environment.">concurrent collections</a> is a <strong><a class="theory-lookup not-relevant" href="/learn/step/22619" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a concurrent queue is a type of thread-safe collection that follows the first-in-first-out (FIFO) principle, where the first element added to the queue is the first one to be removed. | It is often used for communication and data exchange between multiple threads within an application. The `ConcurrentLinkedQueue` is a simple type of concurrent queue that is very similar to a standard queue but provides thread safety. It has methods such as `add` and `offer` to insert an element to the tail of the queue.">concurrent queue</a></strong>. It is often used to organize communication and data exchange (messages, tasks, units of work, or something else) between <a class="theory-lookup not-relevant" href="/learn/step/22619" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a multiple thread refers to a program that contains two or more threads of execution. | Each thread represents a sequence of instructions that can be executed concurrently. A thread is represented by an object, specifically an instance of the Thread class or its subclass. The main thread, which runs the main function, is created automatically in every program. When you create and start one or more threads that will run in parallel with the main thread, the program becomes a multithreaded program.">multiple threads</a> within an application. To achieve that, several threads should have a reference to a common queue and invoke its methods.</p>
+<p>You already know that a queue is a collection that works according to the <strong>first-in-first-out principle</strong> (FIFO): the first element added to the queue will be the first one to be removed.</p>
+<h5 id="thread-safety-of-concurrentlinkedqueue">Thread safety of ConcurrentLinkedQueue</h5>
+<p>The simplest type of a concurrent queue is <code class="language-kotlin">ConcurrentLinkedQueue</code>, which is very similar to a standard queue but is <strong>thread-safe</strong>. It has two methods called <code class="language-kotlin">add</code> and <code class="language-kotlin">offer</code> to insert an element to the tail of a queue.</p>
+<p>The following example demonstrates the <a class="theory-lookup not-relevant" href="/learn/step/22619" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, thread safety refers to the property of a program or system that ensures consistent and correct behavior when accessed by multiple threads, even when those threads access shared data or resources concurrently. | Classic collections like List, Set, and Map are not thread-safe, which means that concurrent access to these collections can result in unexpected behavior or errors. To achieve thread safety, Kotlin provides synchronized collections like CopyOnWriteArrayList and ConcurrentHashMap, which are designed to handle concurrent access and modifications. However, these collections can have a performance impact.">thread safety</a> of this concurrent queue. The program adds new elements using two threads and then prints the total number of elements in this queue:</p>
+<pre><code class="language-kotlin">import java.util.concurrent.ConcurrentLinkedQueue
+import kotlin.concurrent.thread
+
+fun addNumbers(target: ConcurrentLinkedQueue&lt;Int&gt;) {
+    for (i in 0..99_999) target.add(i)
+}
+
+fun main() {
+    // assigning thread-safe implementation
+    val numbers = ConcurrentLinkedQueue&lt;Int&gt;()
+
+    val writer = thread(start = false, name = "Thread 1", block = {
+        addNumbers(numbers)
+    })
+    writer.start()
+
+    addNumbers(numbers) // add number from the main thread
+
+    writer.join() // wait for writer thread
+
+    println(numbers.size) // it prints 200000
+}</code></pre>
+<p>It is not surprising that this program always prints 200000 as expected, no element gets lost. You may start this program as many times as you need. So, <code class="language-kotlin">ConcurrentLinkedQueue</code> is really thread-safe. There is also no <code class="language-kotlin">ConcurrentModificationException</code> if we would like to iterate through this queue.</p>
+<p></p>
+<div class="alert alert-warning"><p>Note that any single operation provided by this queue is thread-safe. However, if we group such operations together in a single method or a sequence of statements, the whole group of operations will not be thread-safe.</p><p></p><p>Moreover, bulk operations of <code class="language-kotlin">ConcurrentLinkedQueue</code> that add, remove, or examine multiple elements, such as the <code class="language-kotlin">addAll</code>, <code class="language-kotlin">removeIf</code>, and <code class="language-kotlin">forEach</code> methods, are <strong>not</strong> guaranteed to be performed atomically.</p></div>
+<p></p>
+<h5 id="communication-between-threads">Communication between threads</h5>
+<p>The following picture demonstrates how to organize communication between threads using a queue. One thread puts elements at the head of a queue, while the other thread takes elements from the tail of the same queue.</p>
+<p style="text-align: center;"><picture><img alt="organizing communication between threads using a queue" height="68" src="https://ucarecdn.com/afdf8010-3627-4423-99ed-6c321acee910/" width="300"/></picture></p>
+<p>We assume that the queue is thread-safe; otherwise, it will not work correctly.</p>
+<p>It is also possible to have more than two threads interacting through a queue.</p>
+<p style="text-align: center;"><picture><img alt="organization of communication between more than two threads" height="82" src="https://ucarecdn.com/f7c072f0-2263-4b21-80c0-701d83d0052b/" width="300"/></picture></p>
+<p>The number of threads can vary.</p>
+<p>Suppose we want to exchange data between two threads using a concurrent queue. One thread will generate three numbers, while the other thread will accept those numbers and print them. The <code class="language-kotlin">poll</code> method is used to get the current first element of a concurrent queue. It returns the element or <code class="language-kotlin">null</code> if the queue is empty. Let's consider the interaction of the threads on a simple example.</p>
+<p>Here is a snippet of code with additional <code class="language-kotlin">sleep</code> invocations to make the output more predictable. <code class="language-kotlin">generator</code> and <code class="language-kotlin">poller</code> interact using a concurrent queue, and no data is lost because the queue is fully thread-safe.</p>
+<pre><code class="language-kotlin">import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
+
+fun main() {
+    val queue = ConcurrentLinkedQueue&lt;Int&gt;()
+
+    val generator = thread(start = false, name = "Thread 1", block = {
+        try {
+            queue.add(10)
+            TimeUnit.MICROSECONDS.sleep(10)
+            queue.add(20)
+            TimeUnit.MILLISECONDS.sleep(10)
+            queue.add(30)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    })
+
+    val poller = thread(start = false, name = "Thread 2", block = {
+        var countRead = 0
+        while (countRead != 3) {
+            val next: Int? = queue.poll()
+            if (next != null) countRead++
+            println(next)
+            try {
+                TimeUnit.MILLISECONDS.sleep(10)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    })
+
+    generator.start()
+    poller.start()
+}</code></pre>
+<p>Here is an example of the output:</p>
+<pre><code class="language-no-highlight">null
+10
+20
+30</code></pre>
+<p>It may be slightly different, but all numbers should be printed.</p>
+<h5 id="composite-operations">Composite operations</h5>
+<p>Every standard method of a concurrent queue provides thread safety. However, if you want to put several methods together, there are no such guarantees.</p>
+<p>Suppose you want to add two elements in a concurrent queue so that they follow each other in this queue. Here is a method:</p>
+<pre><code class="language-kotlin">fun addTwoElements(queue: ConcurrentLinkedQueue&lt;Int&gt;, e1: Int, e2: Int) {
+    queue.add(e1) // (1)
+    queue.add(e2) // (2)
+}</code></pre>
+<p>The method will add two elements one after the other only in case there is only one writing thread. If there are more writing threads, one thread may perform (1) and then another thread may intervene and do the same. Only after that, the first thread may perform (2). Thus, the order can be broken in some cases. This problem appears because the method is not <strong>atomic</strong>.</p>
+<p>As mentioned above, bulk methods, such as <code class="language-kotlin">addAll</code>, are also not atomic and don't help to avoid this problem:</p>
+<pre><code class="language-kotlin">queue.addAll(listOf(e1, e2))</code></pre>
+<p>The problem can be solved only by the <code class="language-kotlin">@Synchronized</code> annotation:</p>
+<pre><code class="language-kotlin">@Synchronized fun addTwoElements(queue: ConcurrentLinkedQueue&lt;Int&gt;, e1: Int, e2: Int) {
+    queue.add(e1) // (1)
+    queue.add(e2) // (2)
+}</code></pre>
+<p>In such a case, you need to make sure that all the operations that update the queue are synchronized, not only the method <code class="language-kotlin">addTwoElements</code>.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>We've learned about concurrent queues and the thread-safe type of a concurrent queue in Kotlin: <code class="language-kotlin">ConcurrentLinkedQueue</code>. Now you know how such queues work and how to synchronize multiple methods with the <code class="language-kotlin">@Synchronized</code> annotation. You've also learned such methods of concurrent queues as <code class="language-kotlin">poll</code> and <code class="language-kotlin">add</code>. Time for some practice!</p>
+</div>

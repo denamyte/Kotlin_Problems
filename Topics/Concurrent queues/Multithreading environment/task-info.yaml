@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: "Only one thread can produce to the queue, several threads can consume from\
+    \ the queue"
+  - text: Several threads can consume from the queue
+  - text: Several threads can produce to the queue
+  - text: "Only one thread can consume from the queue, several threads can produce to\
+    \ the queue"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/22623#comment
+status: Solved
+record: -1
+local_check: false

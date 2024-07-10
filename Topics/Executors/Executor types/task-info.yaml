@@ -1,0 +1,23 @@
+type: matching
+captions:
+  - Executors.newSingleThreadExecutor()
+  - Executors.newCachedThreadPool()
+  - Executors.newSingleThreadScheduledExecutor()
+  - Executors.newFixedThreadPool()
+options:
+  - An executor with a growing pool
+  - An executor with a single thread
+  - An executor with N threads
+  - An executor that schedules a task
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20104#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3

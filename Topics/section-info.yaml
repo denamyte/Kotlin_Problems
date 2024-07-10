@@ -34,3 +34,7 @@ content:
   - Nullable and non-nullable types
   - Thread management
   - Currying
+  - Concurrent queues
+  - StringBuffer
+  - Monitor and Thread synchronization
+  - Executors
