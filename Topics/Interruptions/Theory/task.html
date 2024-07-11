@@ -1,0 +1,90 @@
+<div class="step-text">
+<p>A thread terminates when its <code class="language-kotlin">run</code> function stops. Sometimes, however, you may need to terminate a task that is currently running: for example, when shutting down an application with <a class="theory-lookup not-relevant" href="/learn/step/20151" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a multiple thread refers to a program that contains two or more threads of execution. | Each thread represents a sequence of instructions that can be executed concurrently. A thread is represented by an object, specifically an instance of the Thread class or its subclass. The main thread, which runs the main function, is created automatically in every program. When you create and start one or more threads that will run in parallel with the main thread, the program becomes a multithreaded program.">multiple threads</a>. Kotlin provides a mechanism called <strong>interruption</strong> for requesting a thread to stop. Interruption does not force a thread to react immediately but notifies it about such a demand.</p>
+<h5 id="interrupt-and-isinterrupted">interrupt() and isInterrupted</h5>
+<p>We cannot interrupt a thread by just sending a special signal. The interrupt mechanism is much more complex and is based on a hidden variable or the thread's "interrupted" flag.</p>
+<p>Invoking the <code class="language-kotlin">interrupt()</code> function on an instance of the <code class="language-kotlin">Thread</code> class sets its "interrupted" flag as <code class="language-kotlin">true</code>:</p>
+<pre><code class="language-kotlin">fun main() {
+    val customThread: Thread = CustomThread()
+    customThread.start()
+    println(Thread.currentThread().id)
+    customThread.interrupt() // interrupt this thread
+}
+class CustomThread: Thread() {
+    override fun run() {
+        while (!isInterrupted) {
+            try {
+                sleep(1000) // it may throw InterruptedException
+            } catch (e: InterruptedException) {
+                println("sleeping was interrupted")
+                break // stop the loop
+            }
+        }
+        print("${currentThread().id} finished")
+    }
+}
+</code></pre>
+<p>The reaction to this event depends on the interrupted thread itself. In the most common case, it stops the execution. However, the thread may simply ignore the flag.</p>
+<p>Depending on the current state of the thread, interruptions are handled differently. Invoking <code class="language-kotlin">customThread.interrupt()</code> will cause <code class="language-kotlin">InterruptedException</code> if the thread is sleeping or joining another thread. If the thread is running, calling the <code class="language-kotlin">.interrupt()</code> method will change the <code class="language-kotlin">isInterrupted</code> flag to <code class="language-kotlin">true</code>. This flag allows you to monitor whether the flow is interrupted.</p>
+<p>Here is an example of how a thread may handle an interruption:</p>
+<pre><code class="language-kotlin">class CustomThread: Thread() {
+    override fun run() {
+        while (!isInterrupted) {
+            try {
+                doAction()
+                sleep(1000) // it may throw InterruptedException
+            } catch (e: InterruptedException) {
+                println("sleeping was interrupted")
+                break // stop the loop
+            }
+        }
+        print("$name finished")
+    }
+
+    private fun doAction() {
+        // something useful
+    }
+}</code></pre>
+<p>When this thread is running, an interruption may occur on any statement inside the <code class="language-kotlin">run</code> function: when checking the loop's condition, performing <code class="language-kotlin">doAction</code>, or during sleep. If the thread is sleeping, <code class="language-kotlin">sleep(1000)</code> throws an <code class="language-kotlin">InterruptedException</code>, which is handled. In other cases, the loop is stopped according to the condition in the next iteration.</p>
+<p>If you prefer implementing <code class="language-kotlin">Runnable</code> rather than extending <code class="language-kotlin">Thread</code> directly, you may use the function <code class="language-kotlin">Thread.interrupted()</code> inside the <code class="language-kotlin">run</code> function. The main difference between the <code class="language-kotlin">Thread.interrupted()</code> method and the previously discussed <code class="language-kotlin">isInterrupted</code> flag is that the <code class="language-kotlin">Thread.interrupted()</code> method resets the interrupt state to <code class="language-kotlin">false</code>.</p>
+<p>In the following paragraph, you will see an example of using this method. </p>
+<h5 id="an-example-counting-with-interruption">An example: counting with interruption</h5>
+<p>As an example, we will consider a task that counts numbers while the thread is not interrupted.</p>
+<pre><code class="language-kotlin">class CountingTask: Runnable {
+    override fun run() {
+        println("Start counting")
+        var i = 1 // the first number to print
+        try {
+            while (!Thread.interrupted()) {
+                println(i)
+                i++
+                Thread.sleep(1000)
+            }
+        } catch (e: InterruptedException) {
+            println("Sleeping was interrupted")
+        }
+        println("Finishing")
+    }
+}</code></pre>
+<p>In this implementation, the thread is sleeping most of the time, and interruption will often occur during the <code class="language-kotlin">sleep</code> state. If the program does not print the string "Sleeping was interrupted", it means that the thread was interrupted during work, not sleep.</p>
+<p>In the <code class="language-kotlin">main</code> function, we create a thread to perform the task and then interrupt the thread:</p>
+<pre><code class="language-kotlin">fun main() {
+    val counter: Thread = Thread(CountingTask())
+    counter.start()
+    sleep(3500L)
+    counter.interrupt() // interrupt this thread
+    counter.join()
+}
+</code></pre>
+<p><strong>Note </strong>that in the <code class="language-kotlin">main</code> function, both functions <code class="language-kotlin">sleep</code> and <code class="language-kotlin">join</code> may also throw <code class="language-kotlin">InterruptedException</code> upon being interrupted. For brevity's sake, we're not mentioning the exception handling.</p>
+<p>The program output is:</p>
+<pre><code class="language-java">Start counting
+1
+2
+3
+4
+Sleeping was interrupted
+Finishing</code></pre>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, we've learned how we can terminate the thread that is being executed in code. </p>
+<p>Now, you can practice your knowledge, but be careful with interrupting tasks and remember about <code class="language-kotlin">InterruptedException</code>, which occurs when the thread is sleeping or joining another thread.</p>
+</div>

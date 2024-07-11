@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: throws InterruptedException
+  - text: stops a thread within the provided timeout
+  - text: changes the isInterrupted flag to true
+  - text: stops a thread immediately
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/24566#comment
+status: Solved
+record: -1
+local_check: false

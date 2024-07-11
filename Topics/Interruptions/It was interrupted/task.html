@@ -1,0 +1,35 @@
+<div class="step-text">
+<p></p>
+<p>Here's a class <code class="language-kotlin">Worker</code> that extends <code class="language-kotlin">Thread</code>.</p>
+<pre><code class="language-kotlin">class Worker: Thread() {
+    override fun run() {
+        try {
+            sleep(200)
+        } catch (e: InterruptedException) {
+            println("It was interrupted in the sleeping state")
+            return
+        }
+        var i: Int = 0
+        if (isInterrupted) {
+            println("It was interrupted after the sleeping time")
+            return
+        }
+        while (i &lt; 100_000) {
+            if (isInterrupted) {
+                println("It was interrupted inside a loop")
+                return
+            }
+            i++
+        }
+        println("Finished")
+    }
+}</code></pre>
+<p>Another thread calls the <code class="language-kotlin">interrupt()</code> method of this thread.</p>
+<pre><code class="language-kotlin">fun main() {
+    val worker = Worker()
+    worker.start()
+    Thread.sleep(100)
+    worker.interrupt()
+}</code></pre>
+<p>What does <code class="language-kotlin">Worker</code> print if another thread interrupts it?</p>
+</div>

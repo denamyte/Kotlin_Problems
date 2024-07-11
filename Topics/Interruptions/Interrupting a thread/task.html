@@ -1,0 +1,25 @@
+<div class="step-text">
+<p></p>
+<p>You are dealing with the class <code class="language-kotlin">Worker</code> that extends <code class="language-kotlin">Thread</code>. The class overrides the function <code class="language-kotlin">run</code> to do something useful.</p>
+<pre><code class="language-kotlin">class Worker : Thread() {
+    override fun run() {
+        try {
+            sleep(1000L)
+        } catch (e: InterruptedException) {
+            throw RuntimeException("You need to wait longer!", e)
+        }
+        val currentId = currentThread().id
+        if (currentId == mainThreadId) {
+            throw RuntimeException("You must start a new thread!")
+        }
+        while (true) {
+            if (isInterrupted) {
+                println("Interrupted")
+                break
+            }
+        }
+    }
+}</code></pre>
+<p>You need to start an instance of this class in a new thread, wait for it a little (2000-3000 milliseconds), and interrupt this new thread.</p>
+<p>If you do not interrupt the thread after starting, something bad will happen.</p><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+</div>

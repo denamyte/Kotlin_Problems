@@ -1,0 +1,32 @@
+<div class="step-text">
+<p></p>
+<p>What is the output of this code snippet?</p>
+<pre><code class="language-kotlin">fun main() {
+    val thread = thread(start = false, block = {
+        if (!interrupted()) {
+            println(interrupted())
+        } else {
+            while (true) {
+                if (!interrupted()) {
+                    println(interrupted())
+                    break
+                }
+            }
+        }
+    })
+    thread.start()
+    thread.interrupt()
+}
+
+fun thread(
+    start: Boolean,
+    block: () -&gt; Unit
+): Thread {
+    val thread = object : Thread() {
+        override fun run() {
+            block()
+        }
+    }
+    return thread
+}</code></pre>
+</div>

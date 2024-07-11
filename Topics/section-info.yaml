@@ -38,3 +38,5 @@ content:
   - StringBuffer
   - Monitor and Thread synchronization
   - Executors
+  - Interruptions
+  - Callable and Future

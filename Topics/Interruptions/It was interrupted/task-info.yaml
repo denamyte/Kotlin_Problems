@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Finished
+  - text: It was interrupted in the sleeping state
+  - text: It was interrupted inside a loop
+  - text: It was interrupted after the sleeping time
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/24574#comment
+status: Solved
+record: -1
+local_check: false

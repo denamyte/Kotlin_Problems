@@ -1,0 +1,16 @@
+<div class="step-text">
+<p></p>
+<p>The class <code class="language-kotlin">CounterThread</code> extends <code class="language-kotlin">Thread</code> and overrides the <code class="language-kotlin">run</code> function. The function increments the <code class="language-kotlin">counter</code> variable in a loop.</p>
+<pre><code class="language-kotlin">class CounterThread : Thread() {
+    override fun run() {
+        var counter: Long = 0
+        while (true) {
+            counter++
+        }
+    }
+}</code></pre>
+<p>As it is now, the loop works infinitely. You should fix it by adding interruption handling.</p>
+<p><br/>
+If another thread interrupts this thread, it must print <strong>"It was interrupted"</strong> and stop.<br/>
+Please do not remove the loop. Otherwise, your solution may not pass the tests.</p><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+</div>

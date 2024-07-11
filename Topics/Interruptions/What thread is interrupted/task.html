@@ -1,0 +1,32 @@
+<div class="step-text">
+<p></p>
+<p>What is the output of this snippet?</p>
+<pre><code class="language-kotlin">import java.lang.Thread.sleep
+
+fun main() {
+    val thread = thread(start = false, block = {
+        while (Thread.currentThread().isInterrupted) {
+            try {
+                sleep(2000)
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }
+    })
+    thread.start()
+    thread.interrupt()
+    println(Thread.currentThread().isInterrupted)
+}
+
+fun thread(
+    start: Boolean,
+    block: () -&gt; Unit
+): Thread {
+    val thread = object : Thread() {
+        override fun run() {
+            block()
+        }
+    }
+    return thread
+}</code></pre>
+</div>

@@ -1,0 +1,12 @@
+content:
+  - Theory
+  - What is Callable
+  - Submitting Callable
+  - Execute Callable objects
+  - Transaction system
+  - Trying to cancel
+  - What is Future
+  - Get the result
+  - How many tasks are finished
+  - Collecting Callables
+  - How many Callable objects are there

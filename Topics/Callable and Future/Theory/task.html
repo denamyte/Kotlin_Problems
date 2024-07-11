@@ -1,0 +1,52 @@
+<div class="step-text">
+<p>Sometimes, what you need is not only execute a task in an executor but also return the result of this task to the calling code. It is possible but inconvenient to do it with <code class="language-kotlin">Runnable</code>s. In order to simplify the task, we can use <code class="language-kotlin">Callable</code> and <code class="language-kotlin">Future</code>.</p><h5 id="the-callable-interface">The Callable interface</h5><p>The executor supports a class of tasks named <code class="language-kotlin">Callable</code>, which returns the result and may throw an exception. This functional interface belongs to the <code class="language-kotlin">java.util.concurrent</code> package. Kotlin automatically converts functional interfaces to lambdas, which makes your code more concise and readable. Let's take a look at an example.</p><p>Here is a <code class="language-kotlin">Callable</code> that emulates a long-running task and returns a number that was "calculated".</p><pre><code class="language-kotlin">import java.util.concurrent.*
+
+val generator = Callable {
+    TimeUnit.SECONDS.sleep(5)
+    70000
+}</code></pre><p>The result of <code class="language-kotlin">generator</code> can be obtained by the <code class="language-kotlin">call()</code> method:</p><pre><code class="language-kotlin">println(generator.call()) // after 5 seconds, 70000 will be printed</code></pre><h5 id="submitting-a-callable-and-obtaining-a-future">Submitting a Callable and obtaining a Future</h5><p>When we submit a <code class="language-kotlin">Callable</code> to the executor service, it cannot return the result directly, since the <code class="language-kotlin">submit()</code> method does not wait until the task completes. Instead, the executor returns a special object called <code class="language-kotlin">Future</code>, which wraps the actual result that may not even exist yet. This object represents the result of an asynchronous computation (task).</p><pre><code class="language-kotlin">import java.util.concurrent.*
+
+val executor: ExecutorService = Executors.newSingleThreadExecutor()
+
+val future = executor.submit(
+    Callable { 
+        TimeUnit.SECONDS.sleep(5)
+        70000
+    }
+)</code></pre><p>Until the task completes, the actual result is not present in the <code class="language-kotlin">future</code>. To check that, we can use the <code class="language-kotlin">isDone</code> property. Most likely, it will return <code class="language-kotlin">false</code> if you get it immediately after obtaining a new <code class="language-kotlin">future</code>.</p><pre><code class="language-kotlin">println(future.isDone) // most likely it is false</code></pre><h5 id="getting-the-actual-result-of-a-task">Getting the actual result of a task</h5><p>We can retrieve the result from a <code class="language-kotlin">future</code> only by using the <code class="language-kotlin">get()</code> method.</p><pre><code class="language-kotlin">val result = future.get()</code></pre><p>It returns the result when the computation has completed; in other words, it blocks the current thread and waits for the result. This method may throw two exceptions: <code class="language-kotlin">ExecutionException</code> and <code class="language-kotlin">InterruptedException</code>, which we omit here for brevity.</p><p>If a submitted task executes an infinite loop or waits for an external resource for too long, the thread that invokes <code class="language-kotlin">get()</code> will be blocked all that time. To prevent that, we can use an overloaded version of <code class="language-kotlin">get()</code> with a waiting timeout.</p><pre><code class="language-kotlin">val result = future.get(10, TimeUnit.SECONDS) // it blocks the current thread </code></pre><p>In this case, the calling thread waits for the computation to complete for 10 seconds at most. If the timeout ends, the method throws <code class="language-kotlin">TimeoutException</code>.</p><h5 id="canceling-a-task">Canceling a task</h5><p>The <code class="language-kotlin">Future</code> class provides an instance method named <code class="language-kotlin">cancel()</code>, which attempts to cancel the execution of a task. This method is more complex than it might seem at first glance.</p><p>An attempt to cancel will fail if the task has already completed, has already been canceled, or could not be canceled for some other reason. If successful or if this task has not yet started when the method is invoked, the task will not be executed.</p><p>The method takes a <code class="language-kotlin">boolean</code> parameter, which determines whether the thread executing this task should be interrupted in an attempt to stop the task (in other words, whether to stop the already running task or not).</p><pre><code class="language-kotlin">future1.cancel(true)  // try to cancel even if the task is executing now
+future2.cancel(false) // try to cancel only if the task is not executing</code></pre><p>Since passing <code class="language-kotlin">true</code> involves interruptions, the cancelation of an executing task is guaranteed only if it handles <code class="language-kotlin">InterruptedException</code> correctly and checks the flag <code class="language-kotlin">Thread.currentThread().isInterrupted</code>.</p><p>If we invoke <code class="language-kotlin">future.get()</code> on a successfully canceled task, the method throws a <code class="language-kotlin">CancellationException</code>. If you do not want to deal with it, you may check whether a task was canceled by the <code class="language-kotlin">isCancelled</code> property.</p><h5 id="the-advantage-of-using-callable-and-future">The advantage of using Callable and Future</h5><p>The approach we are learning here allows us to do something useful during the time between obtaining a <code class="language-kotlin">Future</code> and getting the actual result. In this time interval, we can submit several tasks to the executor and only after that wait for all the results to be aggregated.</p><pre><code class="language-kotlin">import java.util.concurrent.*
+
+val executor = Executors.newFixedThreadPool(4)
+
+val future1 = executor.submit(
+    Callable {
+        TimeUnit.SECONDS.sleep(5)
+        700000
+    }
+)
+
+val future2 = executor.submit(
+    Callable {
+        TimeUnit.SECONDS.sleep(5)
+        900000
+    }
+)
+
+val result = future1.get() + future2.get() // waiting for both results
+
+println(result) // 1600000</code></pre><p>If you have a modern computer, these tasks may be executed in parallel.</p><h5 id="methods-invokeall-and-invokeany">Methods invokeAll and invokeAny</h5><p>In addition to the features described above, there are two useful methods for submitting batches of <code class="language-kotlin">Callable</code> to an executor:</p><ul><li><p><code class="language-kotlin">invokeAll()</code> accepts a prepared collection of callables and returns a collection of futures;</p></li><li><p><code class="language-kotlin">invokeAny()</code> also accepts a collection of callables and returns the result (not a future!) of the one that has completed successfully.</p></li></ul><p>Both methods also have overloaded versions that accept execution timeout, which is often needed in real life.</p><p>Suppose that we need to calculate several numbers in separate tasks and then to sum up the numbers in the <code class="language-kotlin">main</code> thread. It is easy to do using the <code class="language-kotlin">invokeAll()</code> method. </p><pre><code class="language-kotlin">import java.util.concurrent.*
+
+val executor = Executors.newFixedThreadPool(4)
+
+// three "difficult" tasks
+val callables = listOf(
+    Callable { 1000 },
+    Callable { 2000 },
+    Callable { 1500 }
+)
+
+val futures = executor.invokeAll(callables)
+var sum = 0
+for (future in futures) sum += future.get() // blocks on each future to get the result
+println(sum)</code></pre><h5 id="summary">Summary</h5><p>Let's summarize what we've learned about <code class="language-kotlin">Callable</code> and <code class="language-kotlin">Future</code>.</p><p>To get the result of an asynchronous task executed in <code class="language-kotlin">ExecutorService</code>, you need to take three steps:</p><ol><li><p>create an object representing a <code class="language-kotlin">Callable</code> task;</p></li><li><p>submit the task to <code class="language-kotlin">ExecutorService</code> and obtain a <code class="language-kotlin">Future</code>;</p></li><li><p>invoke <code class="language-kotlin">get()</code> to receive the actual result when you need it.</p></li></ol><p>Using <code class="language-kotlin">Future</code> allows us not to block the current thread until we do want to receive the result of a task. It is also possible to start multiple tasks and then get all the results in order to aggregate them in the current thread. In addition to making your program more responsive, it will speed up your calculations if your computer supports parallel execution of threads.</p><p>You may also use the <code class="language-kotlin">cancel()</code> method, the <code class="language-kotlin">isDone</code> property, and the <code class="language-kotlin">isCancelled</code> property of a <code class="language-kotlin">future</code>, but be careful with exception handling when using them. Unfortunately, we cannot give you all possible recipes and best practices within the lesson, but the skills will come with experience. The crucial thing, especially in multi-threaded programming, is to carefully read the documentation.</p>
+</div>

@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: It is another type of ExecutorService
+  - text: A task that may return a value
+  - text: A task that cannot return a value
+  - text: The result of an asynchronous computation
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/21788#comment
+status: Solved
+record: -1
+custom_name: What is Callable?
+local_check: false

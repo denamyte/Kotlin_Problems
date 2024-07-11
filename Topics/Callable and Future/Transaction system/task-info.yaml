@@ -1,0 +1,14 @@
+type: code
+files:
+  - name: src/Main.kt
+    visible: true
+    highlight_level: NONE
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/21796#comment
+status: Failed
+feedback:
+  message: |
+    Failed test #4 of 4. Time limit exceeded
+  time: "Thu, 11 Jul 2024 13:29:06 UTC"
+record: -1
+submission_language: kotlin

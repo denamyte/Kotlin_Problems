@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: 10
+  - text: A list of Futures
+  - text: 30
+  - text: "Either 10, 20 or 30"
+  - text: 20
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/27095#comment
+status: Solved
+record: -1
+local_check: false

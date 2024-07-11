@@ -1,0 +1,14 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: Periodically check the value of the isInterrupted flag
+  - text: Return from the thread
+  - text: Once invoke interrupt()
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/24573#comment
+status: Solved
+record: -1
+local_check: false

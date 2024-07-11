@@ -1,0 +1,20 @@
+<div class="step-text">
+<p></p>
+<p>You have the following snippet:</p>
+<pre><code class="language-kotlin">fun main() {
+    val executor: ExecutorService = Executors.newSingleThreadExecutor()
+
+    val future = executor.submit(
+        Callable {
+            Callable {
+                100 + 100
+            }
+        }
+    )
+
+    future.cancel(true)
+    println(future.get())
+    executor.shutdown()
+}</code></pre>
+<p>What will the code print?</p>
+</div>

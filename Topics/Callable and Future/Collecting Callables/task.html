@@ -1,0 +1,17 @@
+<div class="step-text">
+<p>You have the following snippet:</p><pre><code class="language-kotlin">import java.util.concurrent.*
+
+fun main() {
+    val executor = Executors.newFixedThreadPool(4)
+
+    val callables = listOf(
+        Callable { 10 },
+        Callable { 20 },
+        Callable { 30 }
+    )
+
+    val result = executor.invokeAny(callables)
+ 
+    executor.shutdown()
+}</code></pre><p>What does the variable <code class="language-kotlin">result</code> contain?</p>
+</div>
