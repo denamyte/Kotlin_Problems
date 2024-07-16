@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: a region of code that hides from custom threads
+  - text: a place in the code where the program crashes with an error
+  - text: a region of code that accesses shared resources and should not be executed
+      by more than one thread at the same time
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17876#comment
+status: Solved
+record: -1
+local_check: false

@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: a function
+  - text: an object of the class
+  - text: a class
+  - text: a block of code
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17873#comment
+status: Solved
+record: -1
+local_check: false

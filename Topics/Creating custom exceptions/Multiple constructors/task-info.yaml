@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: throw MyCustomException("Message")
+  - text: throw MyCustomException()
+  - text: throw MyCustomException(otherException)
+  - text: "throw MyCustomException(\"Message\", otherException)"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15016#comment
+status: Solved
+record: -1
+local_check: false

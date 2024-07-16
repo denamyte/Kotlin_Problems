@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: thread synchronization
+  - text: unexpected behavior
+  - text: critical section
+  - text: annotation
+  - text: shared data
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17879#comment
+status: Solved
+record: -1
+local_check: false

@@ -40,3 +40,5 @@ content:
   - Executors
   - Interruptions
   - Callable and Future
+  - Creating custom exceptions
+  - Thread synchronization

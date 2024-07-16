@@ -1,15 +1,13 @@
-import java.util.concurrent.*
+// You can experiment here, it won’t be checked
 
+class NonGenericClass(val value: Any) {
+
+    fun get(): Any {
+        return value
+    }
+}
 fun main() {
-    val executor = Executors.newFixedThreadPool(4)
+    val instance: NonGenericClass = NonGenericClass("Hello")
 
-    val callables = listOf(
-        Callable { 10 },
-        Callable { 20 },
-        Callable { 30 }
-    )
-
-    val result = executor.invokeAny(callables)
-
-    executor.shutdown()
+    val num: Int = instance.get() as Int
 }

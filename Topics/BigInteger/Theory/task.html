@@ -31,7 +31,7 @@ val twelve = oneHundredTen / nine  // integer division = 12
 val two = oneHundredTen % nine     // remainder = 2</code></pre>
 <p>The unary minus operator returns a new <code class="language-kotlin">BigInteger</code> that has an opposite sign.</p>
 <pre><code class="language-kotlin">val minusOne = -one // -1</code></pre>
-<p>Also, it is possible to use increment (<code class="language-kotlin">++</code>) and decrement (<code class="language-kotlin">--</code>) operators in prefix and <a class="theory-lookup not-relevant" href="/learn/step/7964" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a postfix form is a type of increment or decrement operation that is performed after using the variable. | When using the postfix form, the value of the variable is used first in the expression before it is incremented or decremented. For example, if you have a variable `x` with a value of 10, and you use the postfix increment operator `x++`, the value of `x` in the expression will be 10, but the value of `x` itself will be incremented to 11. This is different from the prefix form, where the variable is incremented or decremented before it is used in the expression.">postfix forms</a>.</p>
+<p>Also, it is possible to use increment (<code class="language-kotlin">++</code>) and decrement (<code class="language-kotlin">--</code>) operators in prefix and postfix forms.</p>
 <h5 id="functions-of-biginteger">Functions of BigInteger</h5>
 <p>The <code class="language-kotlin">divideAndRemainder</code> function returns an array consisting of two numbers: the result of integer division and the remainder:</p>
 <pre><code class="language-kotlin">val (result, remainder) = oneHundredTen.divideAndRemainder(nine) // 12 and 2</code></pre>
