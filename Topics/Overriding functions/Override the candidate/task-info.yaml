@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: getColorInfo()
+  - text: getWaterTax()
+  - text: getTax()
+  - text: getFullInfo()
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7888#comment
+status: Solved
+record: -1
+local_check: false

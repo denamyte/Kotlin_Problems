@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: open
+  - text: public
+  - text: inherit
+  - text: super
+  - text: override
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7885#comment
+status: Solved
+record: -1
+local_check: false

@@ -1,0 +1,14 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: All BigDecimal instances are mutable
+  - text: All BigDecimal instances are immutable
+  - text: 'BigDecimal instances are immutable only when declared with the val keyword '
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12538#comment
+status: Solved
+record: -1
+local_check: false

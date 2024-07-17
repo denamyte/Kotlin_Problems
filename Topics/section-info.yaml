@@ -42,3 +42,6 @@ content:
   - Callable and Future
   - Creating custom exceptions
   - Thread synchronization
+  - Mutable Map
+  - BigDecimal
+  - Overriding functions

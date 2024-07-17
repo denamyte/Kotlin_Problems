@@ -1,0 +1,23 @@
+type: matching
+captions:
+  - "val num = BigDecimal(-3.125).setScale(2, RoundingMode.FLOOR)"
+  - "val num = BigDecimal(-3.125).setScale(2, RoundingMode.CEILING)"
+  - "val num = BigDecimal(4.125).setScale(2, RoundingMode.HALF_UP)"
+  - "val num = BigDecimal(4.125).setScale(2, RoundingMode.HALF_DOWN)"
+options:
+  - -3.12
+  - -3.13
+  - 4.13
+  - 4.12
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20625#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3
