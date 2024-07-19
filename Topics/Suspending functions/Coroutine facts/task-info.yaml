@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Coroutines use every single thread
+  - text: Coroutines are more expensive than threads
+  - text: Coroutines are cheaper than threads
+  - text: Coroutines can do computations asynchronously
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20888#comment
+status: Solved
+record: -1
+local_check: false

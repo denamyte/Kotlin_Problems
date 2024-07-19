@@ -45,3 +45,7 @@ content:
   - Mutable Map
   - BigDecimal
   - Overriding functions
+  - toString()
+  - Data class
+  - Destructuring declarations
+  - Suspending functions
