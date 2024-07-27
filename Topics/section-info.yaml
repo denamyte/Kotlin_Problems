@@ -49,3 +49,4 @@ content:
   - Data class
   - Destructuring declarations
   - Suspending functions
+  - Default arguments
