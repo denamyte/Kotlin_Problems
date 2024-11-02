@@ -49,7 +49,7 @@ val reverse = -first  //  -0.2
 val module = first.abs()  //  0.2
 // raise to the power, works only with Int
 val power = first.pow(3) </code></pre>
-<p>It is also possible to use increment (<code class="language-kotlin">++</code>) and decrement (<code class="language-kotlin">--</code>) operators in their <a class="theory-lookup not-relevant" href="/learn/step/12536" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a postfix form is a type of increment or decrement operation that is performed after using the variable. | When using the postfix form, the value of the variable is used first in the expression before it is incremented or decremented. For example, if you have a variable `x` with a value of 10, and you use the postfix increment operator `x++`, the value of `x` in the expression will be 10, but the value of `x` itself will be incremented to 11. This is different from the prefix form, where the variable is incremented or decremented before it is used in the expression.">postfix forms</a>.</p>
+<p>It is also possible to use increment (<code class="language-kotlin">++</code>) and decrement (<code class="language-kotlin">--</code>) operators in their postfix forms.</p>
 <h5 id="rounding-control">Rounding control</h5>
 <p>When we need to tweak the accuracy (the number of digits after the point), <code class="language-kotlin">setScale()</code> comes to the rescue. It allows us to adjust the precision of large fractional numbers:</p>
 <pre><code class="language-kotlin">bigDecimal.setScale(newScale, RoundingMode)</code></pre>
@@ -84,7 +84,7 @@ println(bigDecimal) // 1000000000000000000.000</code></pre>
 <p></p>
 <h5 id="rounding-in-arithmetic-operations">Rounding in arithmetic operations</h5>
 <p>Finally, let's discuss something a little more advanced: at this point, you should have enough background knowledge for that.</p>
-<p>Let's talk about determining the accuracy of the result of division. The scale of the result is the same as the scale of the dividend, and by default, <code class="language-kotlin">RoundingMode.HALF_EVEN</code> is used. However, you can specify the scale manually if necessary:</p>
+<p>Let's talk about determining the accuracy of the result of division. The scale of the result is the same as the scale of the <a class="theory-lookup not-relevant" href="/learn/step/12536" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a dividend is a number that is being divided by another number, called the divisor, in the process of division. | In the Euclidean division formula, the dividend is represented as the product of the divisor and the quotient, added to the remainder. For example, if the dividend is 16 and the divisor is 5, the quotient is 3 and the remainder is 1, as calculated by the formula: 16 = 5 * 3 + 1. This concept applies to both positive and negative numbers.">dividend</a>, and by default, <code class="language-kotlin">RoundingMode.HALF_EVEN</code> is used. However, you can specify the scale manually if necessary:</p>
 <pre><code class="language-kotlin">val dividend = BigDecimal("0.9865745")
 val divisor = BigDecimal("3.543")
 

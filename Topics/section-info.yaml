@@ -50,3 +50,6 @@ content:
   - Destructuring declarations
   - Suspending functions
   - Default arguments
+  - For loop and arrays
+  - The main() function
+  - Map

@@ -3,14 +3,14 @@ is_multiple_choice: true
 options:
   - text: <code>shutdown()</code> blocks the current thread
   - text: An executor isolates tasks from threads
-  - text: ExecutorService is synchronized by default
   - text: The number of threads in an executor can be infinite
+  - text: ExecutorService is synchronized by default
 files:
   - name: src/Main.kt
     visible: true
     learner_created: false
 feedback_link: https://hyperskill.org/learn/step/21759#comment
-status: Failed
+status: Solved
 record: -1
 custom_name: What do you know about executors?
 local_check: false
