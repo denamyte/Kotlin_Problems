@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: the target image pixels are distorted
+  - text: an Exception is thrown
+  - text: the transformed image is cropped to the new dimensions
+  - text: the drwaImage() function isn't executed
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/18689#comment
+status: Solved
+record: -1
+local_check: false

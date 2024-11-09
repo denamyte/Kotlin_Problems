@@ -1,0 +1,24 @@
+type: sorting
+options:
+  - "graphics.drawImage(image, 0, 0, null)"
+  - "fun doubleImage(image: BufferedImage): BufferedImage {"
+  - val graphics = doubleImage.createGraphics()
+  - "}"
+  - "graphics.scale(2.0, 2.0)"
+  - "val doubleImage = BufferedImage(image.width * 2, image.height * 2, BufferedImage.TYPE_INT_RGB)"
+  - return doubleImage
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/18690#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6

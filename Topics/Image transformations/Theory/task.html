@@ -1,0 +1,150 @@
+<div class="step-text">
+<p></p>
+<p>In many cases, the images we are going to use need some adjustments. These can span from rotating the images to changing their size. In this topic, a few but of much interest transformations will be examined.</p>
+<h5 id="image-resizing">Image resizing</h5>
+<p>There are many methods for resizing an image. Here we will rely on the powerful <code class="language-kotlin">drawImage()</code> method of the <code class="language-kotlin">java.awt.Graphics2D</code> library. It is used for drawing an image at a certain position of the target image. The function can be called with various parameters. The form of the function that we are going to use is the following:</p>
+<pre><code class="language-kotlin">drawImage(image: Image, x: Int, y: Int, width: Int, height: Int, observer: ImageObserver)</code></pre>
+<p>Here <code class="language-kotlin">image</code> is the image we are going to draw on the target image, <code class="language-kotlin">x</code> and <code class="language-kotlin">y</code> denote the coordinates of the top-left starting position of the target image, <code class="language-kotlin">width</code> and <code class="language-kotlin">height</code> denote the width and height of the drawn image on the target image respectively. The <code class="language-kotlin">observer</code> option is used to notify the application of any updates to an asynchronously loaded picture; usually set to <code class="language-kotlin">null</code>.</p>
+<p>A characteristic feature of this function, which we will use for resizing, is that the drawn image is <strong>scaled to fit</strong> into the provided <code class="language-kotlin">width</code> and <code class="language-kotlin">height</code> parameters. Following is an example function that returns a resized image of the input image, with the provided <code class="language-kotlin">width</code> and <code class="language-kotlin">height</code> dimensions. The <code class="language-kotlin">dispose()</code> function is used to free the resources attached to theGraphics2D instance.</p>
+<pre><code class="language-kotlin">fun resizeImage(image: BufferedImage, width: Int, height: Int): BufferedImage {
+
+    // Create an image with the new dimensions
+    val resized = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+    
+    // Get a Graphics2D instance
+    val graphics = resized.createGraphics()
+    
+    // Draw the scaled image
+    graphics.drawImage(image, 0, 0, width, height, null)
+    
+    // Dispose of the Graphics2D instance and release any system resources it is using
+    graphics.dispose()
+
+    return resized
+}</code></pre>
+<p>Note that the aspect ratio of the target image doesn't have to be the same as of the original image. In case the dimensions of the target image are smaller than the scaled source image, the scaled image is cropped.</p>
+<p>Following is an example of resizing an original image to a smaller one .</p>
+<p><source media="(max-width: 480px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 480px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="original photo" height="500" src="https://ucarecdn.com/367f1e56-59fd-4e8f-9006-bca16ec50fcc/" width="500"/></picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 480px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="reduced photo" height="300" src="https://ucarecdn.com/8f3a2ff0-e7a0-4c95-83d8-1e334faf77b7/" width="300"/></picture></p>
+<p>Another method requires the use of the <code class="language-kotlin">java.awt.Graphics2D</code> class <code class="language-kotlin">scale()</code> method:</p>
+<pre><code class="language-kotlin">scale(sx: Double, sy: Double)</code></pre>
+<p>Here <code class="language-kotlin">sx</code> and <code class="language-kotlin">sy</code> are the scaling factors in the horizontal and the vertical direction respectively.</p>
+<p>We will also need a simpler form of the <code class="language-kotlin">drawImage()</code> method (without the dimension parameters), that is:</p>
+<pre><code class="language-kotlin">drawImage(image: Image, x: Int, y: Int, observer: ImageObserver)</code></pre>
+<p>The <code class="language-kotlin">scale()</code> method defines the factor per dimension, which will be used by the <code class="language-kotlin">drawImage()</code> to copy the image over another one, like in the following example:</p>
+<pre><code class="language-kotlin">fun resizeImage(image: BufferedImage, factor: Double): BufferedImage {
+
+    // Dimensions of the new image
+    // If the target is smaller than these dimensions,
+    // then the image will be cropped
+    val w = (factor * image.width).toInt()
+    val h = (factor * image.height).toInt()
+
+    // Create an image with the new dimensions
+    val resized = BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
+
+    // Get a Graphics2D instance
+    val graphics = resized.createGraphics()
+
+    // Set the scaling factor
+    graphics.scale(factor, factor)
+
+    // Draw the scaled image
+    graphics.drawImage(image, 0, 0, null)
+
+    // Dispose of the Graphics2D instance and release any system resources it is using
+    graphics.dispose()
+
+    return resized
+}</code></pre>
+<h5 id="image-rotation">Image rotation</h5>
+<p>Rotating an image is similar to the latter method we have used for resizing; the difference is in using the <code class="language-kotlin">java.awt.Graphics2D</code> class <code class="language-kotlin">translate()</code> and <code class="language-kotlin">rotate()</code> methods instead of <code class="language-kotlin">scale()</code>. The simplest form of the <code class="language-kotlin">rotate()</code> method is the following:</p>
+<pre><code class="language-kotlin">rotate(theta: Double)</code></pre>
+<p>Here <code class="language-kotlin">theta</code> is the rotation angle in radians. <strong>A positive value denotes clockwise</strong> <strong>rotation around the top-left corner</strong>. The form of the <code class="language-kotlin">translate()</code> method that we are going to use is the following:</p>
+<pre><code class="language-kotlin">translate(x: Int, y: Int)</code></pre>
+<p>Here (<code class="language-kotlin">x</code>, <code class="language-kotlin">y</code>) is the new origin of the Graphics context coordinate system. Actually, it means moving <code class="language-kotlin">x</code> pixels in the horizontal direction and of <code class="language-kotlin">y</code> pixels in the vertical direction.</p>
+<p>An example code for rotating an image counterclockwise by 90 degrees (-90) is the following:</p>
+<pre><code class="language-kotlin">fun rotateLeftImage(image: BufferedImage): BufferedImage {
+
+    // Get the dimensions of the image
+    val w = image.width
+    val h = image.height
+
+    // Create an image with inverted dimensions
+    val rotatedLeft = BufferedImage(h, w, BufferedImage.TYPE_INT_RGB)
+
+    // Get a Graphics2D instance
+    val graphics = rotatedLeft.createGraphics()
+
+    // Move down by w
+    graphics.translate(0, w)
+
+    // Rotate 90 degrees counterclockwise
+    // Degrees are changed to radians
+    graphics.rotate(-90.0 * PI / 180.0)
+
+    // Draw the rotated image
+    graphics.drawImage(image, 0, 0, null)
+
+    // Dispose of the Graphics2D instance and release any system resources it is using
+    graphics.dispose()
+
+    return rotatedLeft
+}</code></pre>
+<p>Below is an example of an image rotated left by 90 degrees.</p>
+<p><source media="(max-width: 480px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 480px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="original photo" height="314" src="https://ucarecdn.com/aa7522d2-5239-428a-a7eb-57243520412c/" width="500"/></picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 480px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="an example of an image rotated left by 90 degrees" height="500" src="https://ucarecdn.com/ff0a5d67-f6d0-41e0-9e51-6ddb59d86430/" width="314"/></picture></p>
+<p>An image can be rotated by any degree. However, mind the target image dimensions so that no parts of the image are cropped.</p>
+<h5 id="image-mirroring">Image mirroring</h5>
+<p>An image can be mirrored across one of its <strong>horizontal</strong> or <strong>vertical sides</strong> (<strong>axes of symmetry</strong>). This is a simple process that consists of correctly copying the pixels of the original image to their <strong>symmetrical position across the axis of symmetry</strong>. Following is a function that deploys just that. It returns a <code class="language-kotlin">BufferedImage</code> instance of the mirrored original image across the <strong>vertical side</strong>.</p>
+<pre><code class="language-kotlin">fun mirrorYAxis(image: BufferedImage): BufferedImage {
+
+    // Create a BufferedImage instance with the same parameters as the image
+    val mirrored = BufferedImage(image.width, image.height, image.type)
+
+    for (x in 0 until image.width) {
+        for (y in 0 until image.height) {
+            val color = Color(image.getRGB(x, y))
+
+            // Copy each pixel to its mirrored position across the image's vertical side
+            mirrored.setRGB(image.width - x - 1, y , color.rgb)
+        }
+    }
+
+    return mirrored
+}</code></pre>
+<p>Following is an example of using the above function.</p>
+<p style="text-align: center;"><source media="(max-width: 480px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 480px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="example Image mirroring" height="333" src="https://ucarecdn.com/b3759cd6-121f-41a1-af61-d6b10360ec21/" width="1000"/></picture></p>
+<p>Image mirroring can be accomplished with the use of another form of the <code class="language-kotlin">drawImage()</code> function, which is the following:</p>
+<pre><code class="language-kotlin">drawImage(img: Image,
+       dx1: Int, dy1: Int, dx2: Int, dy2: Int,
+       sx1: Int, sy1: Int, sx2: Int, sy2: Int,
+       observer: ImageObserver)</code></pre>
+<p>(<code class="language-kotlin">dx1</code>, <code class="language-kotlin">dy1</code>) is the position of the <strong>top-left corner on the target image</strong> where the corner position (<code class="language-kotlin">sx1</code>, <code class="language-kotlin">sy1</code>) of the source image is going to be drawn. (<code class="language-kotlin">dx2</code>, <code class="language-kotlin">dy2</code>) is the position of the <strong>bottom-right corner of the target image</strong> where the corner position (<code class="language-kotlin">sx2</code>, <code class="language-kotlin">sy2</code>) of the source image is going to be drawn. This provides us many options of how to transform the original image.</p>
+<p>The following code has the same result as the previous code snippet.</p>
+<pre><code class="language-kotlin">fun mirrorYAxis(image: BufferedImage): BufferedImage {
+
+    // Get the image dimensions
+    val w = image.width
+    val h = image.height
+
+    // Create a BufferedImage instance with the same parameters as the image
+    val resized= BufferedImage(w, h, image.type)
+
+    // Get a Graphics2D instance
+    val graphics = resized.createGraphics()
+
+    // The top-right corner of the source image goes to the top-left corner of the target image,
+    // the bottom-left corner of the source image goes to the bottom-right corner of the target image
+    graphics.drawImage(image, 0, 0, w - 1, h - 1, w - 1, 0, 0, h - 1, null)
+
+    // Dispose of the Graphics2D instance and release any system resources it is using
+    graphics.dispose()
+
+    return resized
+}</code></pre>
+<p>By changing the parameters of the <code class="language-kotlin">drawImage()</code> function, we can get the mirror of the original image across the <strong>horizontal side</strong>. For example:</p>
+<pre><code class="language-kotlin">// Bottom-left corner of the source image to the top-left corner of the target image,
+// top-right corner of the source image to the bottom-right corner of the target image
+graphics.drawImage(image, 0, 0, w - 1, h - 1, 0, h - 1, w - 1, 0, null)</code></pre>
+<h5 id="conclusion">Conclusion</h5>
+<p>We have looked into some fundamental image transformations which can be used in most cases. These <a class="theory-lookup" href="/learn/step/23780" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a transformation refers to the process of converting or modifying the elements of a collection or map to produce a new collection or map. | This can involve transforming the keys or values of a map, or applying operations to the elements of a collection. For example, you might transform a map by obtaining the word length for each key, checking if a word is a palindrome, or making a value reversed only if its key is even. Collection transformation functions in Kotlin allow you to create new collections based on existing ones, such as by creating a list of pairs based on two collections or a map where the key and value are the elements of a collection.">transformations</a> are by no means limited to the methods presented here, but what you've learned is the basis for learning more about this subject.</p>
+</div>

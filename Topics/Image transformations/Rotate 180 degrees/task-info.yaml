@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "graphics.translate(w, h)"
+  - text: "graphics.translate(0, 0)"
+  - text: "graphics.translate(0, w)"
+  - text: "graphics.translate(h, w)"
+  - text: "graphics.translate(w, 0)"
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/18688#comment
+status: Solved
+record: -1
+local_check: false

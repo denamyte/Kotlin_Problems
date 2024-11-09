@@ -1,0 +1,10 @@
+<div class="step-text">
+<p></p>
+<p>Consider the code for rotating an image to the left. If we wish to change it so that it rotates an image clockwise by +180 degrees or counterclockwise by -180 degrees (which is the same), then the new <code class="language-kotlin">BufferedImage</code> should be:</p>
+<pre><code class="language-kotlin">BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)</code></pre>
+<p>The <code class="language-kotlin">rotate()</code> line should be changed to:</p>
+<pre><code class="language-kotlin">graphics.rotate(PI)</code></pre>
+<p>or to:</p>
+<pre><code class="language-kotlin">graphics.rotate(-PI)</code></pre>
+<p>What is the correct change for the <code class="language-kotlin">translate()</code> line? Remember that rotation is performed around the top-left corner.</p>
+</div>
